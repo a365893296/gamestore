@@ -15,10 +15,11 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name','20');
+            $table->string('name');
             $table->float('price', '10')->nullable();
             $table->string('path','200')->nullable() ;
-            $table->integer('categroy');
+            $table->integer('categroy')->reference('id')->on('categories');
+            $table->float('discount_price')->nullable();
             $table->string('description' , '200')->nullable();
             $table->dateTime('issue_date')->nullable();
             $table->timestamps();
