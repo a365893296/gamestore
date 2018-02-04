@@ -17,6 +17,16 @@ window.Vue = require('vue');
 
 Vue.component('gamestore-component', require('./components/GamestoreComponent.vue'));
 
+//引入elementUI
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+
+import router from './router.js'
+Vue.use(ElementUI)
+
 const app = new Vue({
-    el: '#app'
+    el: '#app' ,
+    router ,
 });
+
