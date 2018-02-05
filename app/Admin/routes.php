@@ -12,4 +12,13 @@ Route::group([
 
     $router->get('/', 'HomeController@index');
     $router->resource('users', UserController::class);
+    $router->resource('/games',GameController::class);
+
 });
+
+//Route::group([
+//    'prefix' => 'admin',
+//    'namespace'     => config('admin.route.namespace'),
+//    'middleware'    => config('admin.route.middleware'),
+//],function(Router $router){
+//});
