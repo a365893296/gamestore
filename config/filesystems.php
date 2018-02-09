@@ -45,9 +45,13 @@ return [
 
         //to fixed laravel-admin config error.
         //add disk[admin]
+        //配置本地上传
         'admin' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+//            'root' => storage_path('app'),
+            'root' => public_path('uploads'),
+            'visibility' => 'public',
+            'url' => env('APP_URL').'/uploads',
         ],
 
         'local' => [

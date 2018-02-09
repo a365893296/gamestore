@@ -18,7 +18,7 @@ class CreateGamesTable extends Migration
             $table->string('name');
             $table->float('price', '10')->nullable();
             $table->string('path','200')->nullable() ;
-            $table->integer('categroy')->reference('id')->on('categories');
+            $table->integer('category')->reference('id')->on('categories');
             $table->float('discount_price')->nullable();
             $table->string('description' , '200')->nullable();
             $table->dateTime('issue_date')->nullable();

@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('Dashboard');
+            $content->header('游戏商城后台管理系统');
             $content->description('Description...');
 
             $content->row(Dashboard::title());

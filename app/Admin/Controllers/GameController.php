@@ -24,10 +24,11 @@ class GameController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('游戏');
+            $content->description('游戏后台管理');
 
             $content->body($this->grid());
+//            $content->body($grid);
         });
     }
 
@@ -44,6 +45,7 @@ class GameController extends Controller
             $content->header('header');
             $content->description('description');
 
+
             $content->body($this->form()->edit($id));
         });
     }
@@ -57,8 +59,8 @@ class GameController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('游戏');
+            $content->description('添加游戏');
 
             $content->body($this->form());
         });
@@ -72,11 +74,17 @@ class GameController extends Controller
     protected function grid()
     {
         return Admin::grid(Game::class, function (Grid $grid) {
-
+//            $grid->model()->where('id', '>', 1);
             $grid->id('ID')->sortable();
 
-            $grid->created_at();
-            $grid->updated_at();
+            $grid->column('name','游戏名');
+            $grid->column('path','路径');
+            $grid->column('category','分类');
+            $grid->column('price','原价')->sortable();
+            $grid->column('discount_price', '折扣价')->sortable();
+
+            $grid->created_at('创建时间');
+            $grid->updated_at('更新时间');
         });
     }
 
@@ -88,11 +96,22 @@ class GameController extends Controller
     protected function form()
     {
         return Admin::form(Game::class, function (Form $form) {
+            $form->text('name','游戏名')
+                ->rules('required|min:5|max:20',[
+                    'required'=>'游戏名不能为空',
+                    'min'=> '游戏名最少应有5个字符',
+                    'max' => '游戏名最多只能有20个字符'
+                ]);
 
-            $form->display('id', 'ID');
+            $form->select('category','分类')
+                ->options('/admin/getCategories')
+                ->rules('required',['required'=>'游戏分类不能为空！']);
+            $form->currency('price','价格')->symbol('￥')->default(0)->rules('required',['required'=>'价格不能为空！']);
+            $form->currency('discount_price','折扣价')->symbol('￥');
+            $form->datetime('issue_date','上架日期');
+            $form->textarea('description','游戏描述')->rows(8);
+            $form->file('path','上传文件')->removable();
 
-            $form->display('created_at', 'Created At');
-            $form->display('updated_at', 'Updated At');
         });
     }
 }

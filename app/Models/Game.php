@@ -16,4 +16,8 @@ class Game extends Model
     public function belongsTo($related, $foreignKey = null, $ownerKey = null, $relation = null)
     {
     }
+
+    public function hasOne($related, $foreignKey = null, $localKey = null)
+    {
+    }
 }
