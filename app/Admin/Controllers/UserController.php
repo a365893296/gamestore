@@ -24,8 +24,8 @@ class UserController extends Controller
     {
         return Admin::content(function (Content $content) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('用户');
+            $content->description('列表');
 
             $content->body($this->grid());
         });
@@ -72,6 +72,9 @@ class UserController extends Controller
     protected function grid()
     {
         return Admin::grid(User::class, function (Grid $grid) {
+
+            $grid->disableCreateButton();
+            $grid->disableActions();
 
             $grid->id('ID')->sortable();
 

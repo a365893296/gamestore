@@ -42,8 +42,8 @@ class GameController extends Controller
     {
         return Admin::content(function (Content $content) use ($id) {
 
-            $content->header('header');
-            $content->description('description');
+            $content->header('游戏');
+            $content->description('修改游戏');
 
 //            dd($this->form()->edit($id));
             $content->body($this->form()->edit($id));
@@ -96,9 +96,9 @@ class GameController extends Controller
     {
         return Admin::form(Game::class, function (Form $form) {
             $form->text('name','游戏名')
-                ->rules('required|min:5|max:20',[
+                ->rules('required|min:1|max:20',[
                     'required'=>'游戏名不能为空',
-                    'min'=> '游戏名最少应有5个字符',
+                    'min'=> '游戏名最少应有1个字符',
                     'max' => '游戏名最多只能有20个字符'
                 ]);
 
