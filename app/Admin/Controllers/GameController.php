@@ -109,8 +109,8 @@ class GameController extends Controller
                 ->rules('required',['required'=>'游戏分类不能为空！']);
 
             $form->currency('price','价格')->symbol('￥')->default(0)->rules('required',['required'=>'价格不能为空！']);
-            $form->currency('discount_price','折扣价')->symbol('￥');
-            $form->datetime('issue_date','上架日期');
+            $form->currency('discount_price','折扣价')->symbol('￥')->default(0)->rules(['required'=> '价格不能为空！']);
+            $form->datetime('issue_date','发售日期')->default(now());
             $form->textarea('description','游戏描述')->rows(8);
             $form->file('path','上传文件')->removable();
 
