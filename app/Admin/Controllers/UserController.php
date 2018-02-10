@@ -75,6 +75,7 @@ class UserController extends Controller
 
             $grid->disableCreateButton();
             $grid->disableActions();
+            $grid->disableRowSelector();
 
             $grid->id('ID')->sortable();
 
