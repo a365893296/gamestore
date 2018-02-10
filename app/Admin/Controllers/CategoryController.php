@@ -22,11 +22,12 @@ class CategoryController extends Controller
      */
     public function getCategories()
     {
-        $categroies = Category::all();
-        foreach ($categroies as $key => $value)
-        {
-            $value['text'] = $value['name'];
-        }
+//        $categroies = Category::all();
+//        foreach ($categroies as $key => $value)
+//        {
+//            $value['text'] = $value['name'];
+//        }
+        $categroies = Category::getAllCategories();
         return response()->json($categroies);
     }
     /**

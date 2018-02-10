@@ -9,15 +9,10 @@ class Game extends Model
     protected $table = "games";
 
     protected $fillable = [
-        'name','category',
+        'name','category_id',
     ];
 
-    //todo 模型关系
-    public function belongsTo($related, $foreignKey = null, $ownerKey = null, $relation = null)
-    {
-    }
-
-    public function hasOne($related, $foreignKey = null, $localKey = null)
-    {
+    public function category(){
+        return $this->hasOne('App\Models\Category','id','category_id');
     }
 }

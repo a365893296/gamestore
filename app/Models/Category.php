@@ -11,4 +11,14 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+
+    public static function getAllCategories(){
+        $categroies = Category::all();
+//        foreach ($categroies as $key => $value)
+//        {
+//            $value['text'] = $value['name'];
+//        }
+
+        return $categroies;
+    }
 }

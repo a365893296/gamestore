@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Category;
 use App\Models\Game;
 
 use Encore\Admin\Form;
@@ -28,7 +29,6 @@ class GameController extends Controller
             $content->description('游戏后台管理');
 
             $content->body($this->grid());
-//            $content->body($grid);
         });
     }
 
@@ -45,7 +45,7 @@ class GameController extends Controller
             $content->header('header');
             $content->description('description');
 
-
+//            dd($this->form()->edit($id));
             $content->body($this->form()->edit($id));
         });
     }
@@ -79,7 +79,7 @@ class GameController extends Controller
 
             $grid->column('name','游戏名');
             $grid->column('path','路径');
-            $grid->column('category','分类');
+            $grid->category('分类')->name();
             $grid->column('price','原价')->sortable();
             $grid->column('discount_price', '折扣价')->sortable();
 
@@ -103,9 +103,11 @@ class GameController extends Controller
                     'max' => '游戏名最多只能有20个字符'
                 ]);
 
-            $form->select('category','分类')
-                ->options('/admin/getCategories')
+            //修复没有默认值问题
+            $form->select('category_id','分类')
+                ->options(Category::all()->pluck('name','id'))
                 ->rules('required',['required'=>'游戏分类不能为空！']);
+
             $form->currency('price','价格')->symbol('￥')->default(0)->rules('required',['required'=>'价格不能为空！']);
             $form->currency('discount_price','折扣价')->symbol('￥');
             $form->datetime('issue_date','上架日期');
