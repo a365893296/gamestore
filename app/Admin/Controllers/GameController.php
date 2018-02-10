@@ -78,7 +78,7 @@ class GameController extends Controller
 
             $grid->column('name','游戏名');
             $grid->column('path','路径');
-            $grid->category('分类')->name();
+            $grid->category()->name('分类');
             $grid->column('price','原价')->sortable();
             $grid->column('discount_price', '折扣价')->sortable();
             $grid->column('issue_date', '上架日期')->sortable();
