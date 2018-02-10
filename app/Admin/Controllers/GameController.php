@@ -74,7 +74,6 @@ class GameController extends Controller
     protected function grid()
     {
         return Admin::grid(Game::class, function (Grid $grid) {
-//            $grid->model()->where('id', '>', 1);
             $grid->id('ID')->sortable();
 
             $grid->column('name','游戏名');
@@ -82,8 +81,8 @@ class GameController extends Controller
             $grid->category('分类')->name();
             $grid->column('price','原价')->sortable();
             $grid->column('discount_price', '折扣价')->sortable();
-
-            $grid->created_at('创建时间');
+            $grid->column('issue_date', '上架日期')->sortable();
+//            $grid->created_at('创建时间');
             $grid->updated_at('更新时间');
         });
     }

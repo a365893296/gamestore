@@ -75,6 +75,10 @@ class UserController extends Controller
 
             $grid->id('ID')->sortable();
 
+            $grid->column('name','用户名');
+            $grid->column('email','邮箱');
+            $grid->column('balance', '账户余额')->sortable();
+
             $grid->created_at();
             $grid->updated_at();
         });
