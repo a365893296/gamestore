@@ -16,6 +16,7 @@ class GameController extends Controller
 {
     use ModelForm;
 
+
     /**
      * Index interface.
      *
@@ -84,6 +85,17 @@ class GameController extends Controller
             $grid->column('issue_date', '上架日期')->sortable();
 //            $grid->created_at('创建时间');
             $grid->updated_at('更新时间');
+
+            $grid->filter(function($filter){
+                // 去掉默认的id过滤器
+                $filter->disableIdFilter();
+                // 在这里添加字段过滤器
+                $filter->like('name', '游戏名称');
+                $filter->equal('category_id','游戏分类')->select(Category::all()->pluck('name','id'));
+                $filter->between('price', '原价');
+                $filter->between('discount_price', '折扣价');
+                $filter->between('issue_date', '上架时间')->datetime();
+            });
         });
     }
 
