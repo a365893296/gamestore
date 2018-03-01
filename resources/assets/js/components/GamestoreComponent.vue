@@ -1,14 +1,15 @@
 <template>
     <div>
-    <navbar></navbar>
+        <navbar></navbar>
         <transition appear name="fade" mode="out-in">
-            <!--<router-view></router-view>-->
+            <router-view></router-view>
         </transition>
     </div>
 </template>
 
 <script>
     import navbar from  './navbar.vue'
+//    import home from  './home.vue'
     export default {
         name: 'app',
         data() {

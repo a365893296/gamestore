@@ -7,7 +7,10 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 // import home from './components/home'
-import home from './components/GamestoreComponent.vue'
+import home from './components/home.vue'
+import Login from './components/login.vue'
+import Register from './components/register.vue'
+
 const router = new Router({
     routes: [
         {
@@ -17,6 +20,17 @@ const router = new Router({
             path:'/home' ,
             name: home ,
             component:home,
+        },{
+            path:'/shopping_cart',
+            // name:shopping_cart ,
+        },{
+            path: '/login',
+            name: 'login',
+            component: Login,
+        }, {
+            path: '/register',
+            name: 'register',
+            component: Register,
         }
     ]
 })
