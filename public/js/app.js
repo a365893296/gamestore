@@ -47468,7 +47468,6 @@ var Component = normalizeComponent(
 )
 Component.options.__file = "resources/assets/js/components/navbar.vue"
 
-
 /* hot reload */
 if (false) {(function () {
   var hotAPI = require("vue-hot-reload-api")
@@ -47494,14 +47493,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -47565,33 +47556,66 @@ var render = function() {
   return _c(
     "el-container",
     [
-      _c("el-col", { attrs: { span: 6 } }, [
-        _c("div", [
-          _c("h3", [
-            _c("img", {
-              staticStyle: { width: "15%" },
-              attrs: { src: __webpack_require__(210) }
-            }),
-            _vm._v(" GameStore")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
       _c(
         "el-col",
-        { attrs: { span: 18 } },
+        { attrs: { span: 24 } },
         [
           _c(
             "el-menu",
             {
               staticClass: "el-menu-demo",
-              attrs: { "default-active": _vm.activeIndex, mode: "horizontal" },
+              attrs: {
+                "default-active": _vm.activeIndex,
+                mode: "horizontal",
+                "background-color": "#545c64",
+                "text-color": "#fff",
+                "active-text-color": "#ffd04b"
+              },
               on: { select: _vm.handleSelect }
             },
             [
-              _c("el-menu-item", { attrs: { index: "1" } }, [
-                _vm._v("处理中心")
-              ]),
+              _c(
+                "el-col",
+                { staticStyle: { "margin-top": "1%" }, attrs: { span: 6 } },
+                [
+                  _c("span", { staticStyle: { color: "white" } }, [
+                    _vm._v("GameStore")
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { staticStyle: { "margin-top": "1%" }, attrs: { span: 4 } },
+                [
+                  _c("el-input", {
+                    attrs: {
+                      placeholder: "sss",
+                      size: "small",
+                      "suffix-icon": "el-icon-search"
+                    },
+                    model: {
+                      value: _vm.input,
+                      callback: function($$v) {
+                        _vm.input = $$v
+                      },
+                      expression: "input"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-col",
+                { attrs: { span: 3, offset: 4 } },
+                [
+                  _c("el-menu-item", { attrs: { index: "1" } }, [
+                    _vm._v("处理中心")
+                  ])
+                ],
+                1
+              ),
               _vm._v(" "),
               _c(
                 "el-submenu",
@@ -47614,13 +47638,9 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _c("el-menu-item", { attrs: { index: "3" } }, [
-                _c(
-                  "a",
-                  { attrs: { href: "https://www.ele.me", target: "_blank" } },
-                  [_vm._v("订单管理")]
-                )
-              ])
+              _c("el-menu-item", { attrs: { index: "3" } }, [_vm._v("登录")]),
+              _vm._v(" "),
+              _c("el-menu-item", { attrs: { index: "4" } }, [_vm._v("注册")])
             ],
             1
           )
@@ -91880,18 +91900,6 @@ if (inBrowser && window.Vue) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/game.png?22acc05f3c9ab50f8066ea4025375bdb";
 
 /***/ })
 /******/ ]);

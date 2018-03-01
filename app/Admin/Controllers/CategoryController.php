@@ -16,6 +16,9 @@ class CategoryController extends Controller
 {
     use ModelForm;
 
+
+    //todo 游戏图标、评分
+
     /**
      * 创建或修改时获取分类
      *
