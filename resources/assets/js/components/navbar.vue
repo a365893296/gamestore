@@ -28,8 +28,8 @@
                     <el-menu-item index="2-3">选项3</el-menu-item>
                 </el-submenu>
 
-                    <el-menu-item index="3">登录</el-menu-item>
-                    <el-menu-item index="4">注册</el-menu-item>
+                    <el-menu-item index="login">登录</el-menu-item>
+                    <!--<el-menu-item index="4">注册</el-menu-item>-->
 
             </el-menu>
         </el-col>
