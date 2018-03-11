@@ -2,7 +2,7 @@
     <el-row>
         <el-col :span='24'>
             <el-menu :default-active="activeIndex"
-                     class="el-menu-demo"
+                     class="el-menu--horizontal"
                      mode="horizontal"
                      @select="handleSelect"
                      background-color="#545c64"
@@ -54,4 +54,10 @@
 
     }
 </script>
+
+<style scoped>
+    .el-menu--horizontal {
+        border-bottom: hidden;
+    }
+</style>
 

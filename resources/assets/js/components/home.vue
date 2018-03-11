@@ -7,6 +7,24 @@
                 </el-carousel-item>
             </el-carousel>
         </el-col>
+
+        <el-row style="margin-top: 2%;">
+            <el-col :span="6" v-for="(o, index) in 6" :key="o" :offset="index/3 > 0 ? 1 : 2">
+                <el-card :body-style="{ padding: '0px' }">
+                    <img src="../../image/image1.png" class="image">
+                    <div style="padding: 14px;">
+                        <span>挺进地牢</span>
+                        <div class="bottom clearfix">
+                            <span>价格:1111</span>
+                            <el-button type="text" class="button">购买</el-button>
+                            <el-button type="text" class="button">详情</el-button>
+                        </div>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+
+        <hr>
         <!--<img src="../../image/game.png" style="width: 15%">-->
         <el-row type="flex" justify="center" :gutter="30">
             <el-col :span="3">
@@ -45,5 +63,34 @@
 
     .el-carousel__item:nth-child(2n+1) {
         background-color: #d3dce6;
+    }
+    .time {
+        font-size: 13px;
+        color: #999;
+    }
+
+    .bottom {
+        margin-top: 13px;
+        line-height: 12px;
+    }
+
+    .button {
+        padding: 0;
+        float: right;
+    }
+
+    .image {
+        width: 100%;
+        display: block;
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+        display: table;
+        content: "";
+    }
+
+    .clearfix:after {
+        clear: both
     }
 </style>

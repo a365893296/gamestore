@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-row>
+        <el-row id="background">
             <el-col :span="8">&nbsp</el-col>
 
             <el-col :span="7">
@@ -12,8 +12,8 @@
                             </el-col>
                         </el-form-item>
 
-                        <el-form-item label="用户名" prop="username">
-                            <el-input v-model="registerForm.username"></el-input>
+                        <el-form-item label="邮箱" prop="邮箱">
+                            <el-input v-model="registerForm.email"></el-input>
                         </el-form-item>
 
                         <el-form-item label="密码" prop="password">
@@ -66,7 +66,7 @@
             return {
 
                 registerForm: {
-                    username: '',
+                    email: '',
                     password: '',
                     checkPassword: '',
                     phone: '',
@@ -74,11 +74,11 @@
                 },
 
                 rules: {
-                    username: [
+                    email: [
                         {
-                            required: true, message: '请输入用户名', trigger: 'blur',
+                            required: true, message: '请输入邮箱', trigger: 'blur',
                         }, {
-                            min: 4, max: 10, message: '长度在 4 - 10 之间', trigger: 'blur',
+                            min: 4, max: 20, message: '长度在 4 - 20 之间', trigger: 'blur',
                         }
                     ],
                     password: [
@@ -119,7 +119,7 @@
                         if (valid) {
 
                             axios.post('/register', {
-                                'username': formName.username,
+                                'email': formName.email,
                                 'password': formName.password,
                                 'phone': formName.phone
                             }).then(function (response) {
@@ -182,11 +182,11 @@
     #background {
         display: table;
         width: 100%;
-        height: 100%;
+        @height: 100%;
         padding: 0px 0;
         text-align: center;
         /*color: #fff ;*/
-        /*background: url('../assets/background2.jpg') center;*/
+        background: url('../../image/background2.jpg') center;
         background-color: #000;
         background-size: cover;
         background-attachment: fixed;

@@ -1,9 +1,6 @@
 <template>
 
-    <div class="bg">
-        <canvas id="display"></canvas>
-        <div id="blachole"></div>
-
+    <div id="background">
         <el-row align="middle">
             <div id="login">
 
@@ -13,8 +10,7 @@
 
                     <h2> 登录</h2>
 
-                    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="90px"
-                             class="demo-loginForm">
+                    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="90px">
 
                         <el-form-item label="邮箱" prop="email">
                             <el-input v-model="loginForm.email"></el-input>
@@ -81,7 +77,7 @@
 //            login(formName) {
 //                let _this = this;
 //                axios.post('/login', {
-//                    'username': formName.username,
+//                    'email': formName.email,
 //                    'password': formName.password
 //                }).then(function (response) {
 //                    var data = response.data ;
@@ -111,32 +107,30 @@
 <style scoped>
 
     .form {
-        margin-top: 1%;
+        margin-top: 5%;
         /*border:  1px solid;*/
         padding: 20px 20px 20px 0px;
         background: #fff;
         border-radius: 5px;
     }
 
-    #background{
-        background: #545c64;
+    #background {
+        display: table;
+        width: 100%;
+        height: 100%;
+        padding: 0px 0;
+        text-align: center;
+        /*color: #fff ;*/
+        background: url('../../image/background2.jpg') center;
+        background-color: #000;
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: repeat;
+        /*position: fixed;*/
     }
-    /*#background {*/
-        /*display: table;*/
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*padding: 0px 0;*/
-        /*text-align: center;*/
-        /*!*color: #fff ;*!*/
-        /*!*background: url('../assets/background2.jpg') center;*!*/
-        /*background-color: #000;*/
-        /*background-size: cover;*/
-        /*background-attachment: fixed;*/
-        /*background-repeat: repeat;*/
-        /*!*position: fixed;*!*/
-    /*}*/
 
     .el-form-item__label {
         color: #e9e9e9;
     }
+
 </style>
