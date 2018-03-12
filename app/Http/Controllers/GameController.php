@@ -40,5 +40,7 @@ class GameController extends Controller
             'games' => $data,
         ]);
     }
+
+//    public function (){}
 }
 
