@@ -18,6 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/getCarouselGames','gameController@getCarouselGames');
+Route::get('/getCardsGames','gameController@getCardsGames');
 
 //Route::group(['middleware'=> config('admin.route.middleware')],function(){
 //    Route::get('/api/getCategories', 'CategoryController@getCategories') ;

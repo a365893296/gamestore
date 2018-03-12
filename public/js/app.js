@@ -16181,7 +16181,7 @@ module.exports = "/images/background2.jpg?39d19a771a76ba376eafada32c0232cc";
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(79);
-module.exports = __webpack_require__(222);
+module.exports = __webpack_require__(221);
 
 
 /***/ }),
@@ -89303,10 +89303,12 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_home_vue__ = __webpack_require__(206);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_home_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_home_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_login_vue__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_login_vue__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_register_vue__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_register_vue__ = __webpack_require__(216);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_register_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_register_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_gameDetail_vue__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_gameDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_gameDetail_vue__);
 /**
  * Created by nikejin on 2018/2/4.
  */
@@ -89316,6 +89318,7 @@ module.exports = function (css) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
 
 // import home from './components/home'
+
 
 
 
@@ -89339,6 +89342,10 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
         path: '/register',
         name: 'register',
         component: __WEBPACK_IMPORTED_MODULE_4__components_register_vue___default.a
+    }, {
+        path: '/game/:id',
+        name: 'gameDetail',
+        component: __WEBPACK_IMPORTED_MODULE_5__components_gameDetail_vue___default.a
     }]
 });
 
@@ -92107,13 +92114,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            images1: [],
-            images2: []
+            carouselGames: [],
+            cardsGames: []
         };
+    },
+
+    mounted: function mounted() {
+        console.log('mounted');
+        this.getCarouselGames();
+        this.getCardsGames();
+    },
+    methods: {
+        getCarouselGames: function getCarouselGames() {
+            var _this = this;
+            axios.get('/getCarouselGames').then(function (response) {
+                //                    console.log(response);
+                var data = response.data;
+                _this.carouselGames = data.games;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        getCardsGames: function getCardsGames() {
+            var _this = this;
+            axios.get('/getCardsGames').then(function (response) {
+                //                    console.log(response);
+                var data = response.data;
+                _this.cardsGames = data.games;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        handleClick: function handleClick(id) {
+            this.$router.push({ path: '/game/${id}', params: { id: id } });
+        }
     }
 });
 
@@ -92136,9 +92176,9 @@ var render = function() {
           _c(
             "el-carousel",
             { attrs: { "indicator-position": "outside" } },
-            _vm._l(4, function(item) {
-              return _c("el-carousel-item", { key: item }, [
-                _c("h3", [_vm._v(_vm._s(item))])
+            _vm._l(_vm.carouselGames, function(item, index) {
+              return _c("el-carousel-item", { key: index }, [
+                _c("img", { staticClass: "image", attrs: { src: item.image } })
               ])
             })
           )
@@ -92149,25 +92189,22 @@ var render = function() {
       _c(
         "el-row",
         { staticStyle: { "margin-top": "2%" } },
-        _vm._l(6, function(o, index) {
+        _vm._l(_vm.cardsGames, function(o, index) {
           return _c(
             "el-col",
-            { key: o, attrs: { span: 6, offset: index / 3 > 0 ? 1 : 2 } },
+            { key: index, attrs: { span: 6, offset: index / 3 > 0 ? 1 : 2 } },
             [
               _c("el-card", { attrs: { "body-style": { padding: "0px" } } }, [
-                _c("img", {
-                  staticClass: "image",
-                  attrs: { src: __webpack_require__(211) }
-                }),
+                _c("img", { staticClass: "image", attrs: { src: o.image } }),
                 _vm._v(" "),
                 _c("div", { staticStyle: { padding: "14px" } }, [
-                  _c("span", [_vm._v("挺进地牢")]),
+                  _c("span", [_vm._v(_vm._s(o.name))]),
                   _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "bottom clearfix" },
                     [
-                      _c("span", [_vm._v("价格:1111")]),
+                      _c("span", [_vm._v("价格:" + _vm._s(o.price))]),
                       _vm._v(" "),
                       _c(
                         "el-button",
@@ -92177,7 +92214,15 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "el-button",
-                        { staticClass: "button", attrs: { type: "text" } },
+                        {
+                          staticClass: "button",
+                          attrs: { type: "text" },
+                          on: {
+                            click: function($event) {
+                              _vm.handleClick(o.id)
+                            }
+                          }
+                        },
                         [_vm._v("详情")]
                       )
                     ],
@@ -92191,20 +92236,7 @@ var render = function() {
         })
       ),
       _vm._v(" "),
-      _c(
-        "el-row",
-        { attrs: { type: "flex", justify: "center", gutter: 30 } },
-        [
-          _c(
-            "el-col",
-            { attrs: { span: 3 } },
-            _vm._l(_vm.images2, function(image) {
-              return _c("img", { attrs: { src: image.url, alt: "" } })
-            })
-          )
-        ],
-        1
-      )
+      _c("hr")
     ],
     1
   )
@@ -92221,24 +92253,18 @@ if (false) {
 
 /***/ }),
 /* 211 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/image1.png?6de20e12f182cb67643b0883bea1e7fa";
-
-/***/ }),
-/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(213)
+  __webpack_require__(212)
 }
 var normalizeComponent = __webpack_require__(16)
 /* script */
-var __vue_script__ = __webpack_require__(215)
+var __vue_script__ = __webpack_require__(214)
 /* template */
-var __vue_template__ = __webpack_require__(216)
+var __vue_template__ = __webpack_require__(215)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -92277,13 +92303,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 213 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(214);
+var content = __webpack_require__(213);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -92303,7 +92329,7 @@ if(false) {
 }
 
 /***/ }),
-/* 214 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var escape = __webpack_require__(49);
@@ -92318,7 +92344,7 @@ exports.push([module.i, "\n.form[data-v-69787b62] {\n    margin-top: 5%;\n    /*
 
 
 /***/ }),
-/* 215 */
+/* 214 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92425,7 +92451,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 216 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -92581,19 +92607,19 @@ if (false) {
 }
 
 /***/ }),
-/* 217 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(218)
+  __webpack_require__(217)
 }
 var normalizeComponent = __webpack_require__(16)
 /* script */
-var __vue_script__ = __webpack_require__(220)
+var __vue_script__ = __webpack_require__(219)
 /* template */
-var __vue_template__ = __webpack_require__(221)
+var __vue_template__ = __webpack_require__(220)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -92632,13 +92658,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 218 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(219);
+var content = __webpack_require__(218);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -92658,7 +92684,7 @@ if(false) {
 }
 
 /***/ }),
-/* 219 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var escape = __webpack_require__(49);
@@ -92673,7 +92699,7 @@ exports.push([module.i, "\n.form[data-v-79ef4a3a] {\n    margin-top: 1%;\n    bo
 
 
 /***/ }),
-/* 220 */
+/* 219 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -92830,7 +92856,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 221 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -93030,10 +93056,170 @@ if (false) {
 }
 
 /***/ }),
-/* 222 */
+/* 221 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(229)
+}
+var normalizeComponent = __webpack_require__(16)
+/* script */
+var __vue_script__ = __webpack_require__(231)
+/* template */
+var __vue_template__ = __webpack_require__(232)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/gameDetail.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d6992a8c", Component.options)
+  } else {
+    hotAPI.reload("data-v-d6992a8c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(230);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(15)("26b36642", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d6992a8c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./gameDetail.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d6992a8c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./gameDetail.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#background{\n   /*background: url() center 0px no-repeat #e4e4e4;*/\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 231 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+
+    mounted: function mounted() {
+        this.getGameDetail();
+    },
+    methods: {
+        getGameDetail: function getGameDetail() {}
+    }
+
+});
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "el-row",
+    [
+      _c("el-col", [
+        _c("img", {
+          attrs: {
+            src: "http://www.gamestore.com/uploads/images/Celeste.jpg",
+            alt: ""
+          }
+        })
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-d6992a8c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

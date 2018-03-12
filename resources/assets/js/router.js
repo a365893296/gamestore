@@ -10,6 +10,7 @@ Vue.use(Router)
 import home from './components/home.vue'
 import Login from './components/login.vue'
 import Register from './components/register.vue'
+import GameDetail from './components/gameDetail.vue'
 
 const router = new Router({
     routes: [
@@ -31,6 +32,10 @@ const router = new Router({
             path: '/register',
             name: 'register',
             component: Register,
+        },{
+            path:'/game/:id' ,
+            name: 'gameDetail' ,
+            component:GameDetail,
         }
     ]
 })
