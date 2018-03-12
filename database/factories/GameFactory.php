@@ -7,7 +7,7 @@ $factory->define(App\Models\Game::class, function (Faker $faker) {
         'name'=> $faker->userName,
         'price' => $faker->randomFloat(2,0 ,100),
         'path'=>"/path/$faker->word",
-        'category' =>random_int(1,8),
+        'category_id' =>random_int(1,8),
         'description'=>"$faker->text"  ,
         'issue_date'=>$faker->dateTime ,
     ];

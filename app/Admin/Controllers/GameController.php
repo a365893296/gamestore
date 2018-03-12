@@ -123,8 +123,13 @@ class GameController extends Controller
             $form->currency('discount_price','折扣价')->symbol('￥')->default(0)->rules(['required'=> '价格不能为空！']);
             $form->datetime('issue_date','发售日期')->default(now());
             $form->textarea('description','游戏描述')->rows(8);
-            $form->file('path','上传文件')->removable();
 
+
+            $form->image('background_image','游戏背景图片')->removable();
+            $form->image('image','游戏图标')->removable();
+            $form->multipleImage('images','游戏截图')->removable();
+
+            $form->file('path','上传游戏文件')->removable();
         });
     }
 }
