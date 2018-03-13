@@ -18,7 +18,7 @@
                     <el-input v-model="input" placeholder="sss" size="small" suffix-icon="el-icon-search"></el-input>
                 </el-col>
                 <el-col :span="3" :offset="4">
-                    <el-menu-item index="1" >购物车</el-menu-item>
+                    <el-menu-item index="home" >首页</el-menu-item>
                 </el-col>
             <!--todo 先这样吧 后面再改-->
                 <el-submenu index="2">
@@ -48,7 +48,12 @@
             }
         },
         methods: {
-            handleSelect(){
+            handleSelect(key){
+                if(key == 'login'){
+                    this.$router.push({name:'login'});
+                }else if(key=='home'){
+                    this.$router.push({name:'home'});
+                }
             }
         }
 

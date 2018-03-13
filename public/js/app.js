@@ -47617,7 +47617,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        handleSelect: function handleSelect() {}
+        handleSelect: function handleSelect(key) {
+            if (key == 'login') {
+                this.$router.push({ name: 'login' });
+            } else if (key == 'home') {
+                this.$router.push({ name: 'home' });
+            }
+        }
     }
 
 });
@@ -47688,8 +47694,8 @@ var render = function() {
                 "el-col",
                 { attrs: { span: 3, offset: 4 } },
                 [
-                  _c("el-menu-item", { attrs: { index: "1" } }, [
-                    _vm._v("购物车")
+                  _c("el-menu-item", { attrs: { index: "home" } }, [
+                    _vm._v("首页")
                   ])
                 ],
                 1
