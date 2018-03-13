@@ -41,6 +41,11 @@ class GameController extends Controller
         ]);
     }
 
-//    public function (){}
+    public function game(){
+        $game =Game::find($_POST['id']);
+        return response()->json([
+            'game' => $game ,
+         ]);
+    }
 }
 

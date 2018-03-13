@@ -50,6 +50,7 @@
             this.getCardsGames();
         },
         methods: {
+            //获取走马灯的图片
             getCarouselGames: function () {
                 let _this = this;
                 axios.get('/getCarouselGames').then((response) => {
@@ -60,6 +61,7 @@
                     console.log(error);
                 });
             },
+            //获取游戏列表图片
             getCardsGames: function () {
                 let _this = this;
                 axios.get('/getCardsGames').then((response) => {
