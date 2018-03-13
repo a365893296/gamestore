@@ -92140,10 +92140,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getCarouselGames: function getCarouselGames() {
             var _this = this;
             axios.get('/getCarouselGames').then(function (response) {
-                //                    console.log(response);
                 var data = response.data;
                 _this.carouselGames = data.games;
-                console.log('carouselImages : ' + _this.carouselGames);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -92152,7 +92150,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getCardsGames: function getCardsGames() {
             var _this = this;
             axios.get('/getCardsGames').then(function (response) {
-                //                    console.log(response);
                 var data = response.data;
                 _this.cardsGames = data.games;
             }).catch(function (error) {
@@ -92162,7 +92159,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleClick: function handleClick(Id) {
             var id = Id;
             this.$router.push({ path: '/game/' + id });
-            //                this.$router.push({name:'gameDetail',params:{id:Id}});
         }
     }
 });
@@ -93191,7 +93187,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             game: {
-                //                    name:'',
+                name: '',
+                category: {
+                    name: ''
+                },
+                price: 0,
+                issue_date: ''
             },
             carouselImages: [],
             Image: '',

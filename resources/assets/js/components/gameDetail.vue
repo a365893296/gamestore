@@ -27,7 +27,12 @@
         data(){
             return {
                 game:{
-//                    name:'',
+                    name:'',
+                    category:{
+                        name:'',
+                    },
+                    price:0 ,
+                    issue_date:'',
                 },
                 carouselImages:[] ,
                 Image:'',

@@ -53,10 +53,8 @@
             getCarouselGames: function () {
                 let _this = this;
                 axios.get('/getCarouselGames').then((response) => {
-//                    console.log(response);
                     let data = response.data ;
                     _this.carouselGames = data.games ;
-                    console.log('carouselImages : '+_this.carouselGames);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -65,7 +63,6 @@
             getCardsGames: function () {
                 let _this = this;
                 axios.get('/getCardsGames').then((response) => {
-//                    console.log(response);
                     let data = response.data ;
                     _this.cardsGames = data.games ;
                 }).catch((error) => {
@@ -75,7 +72,6 @@
             handleClick:function(Id){
                 const id = Id ;
                 this.$router.push({path:`/game/${id}`});
-//                this.$router.push({name:'gameDetail',params:{id:Id}});
             }
         }
     }
