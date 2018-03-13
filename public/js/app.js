@@ -92126,7 +92126,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        console.log('mounted');
         this.getCarouselGames();
         this.getCardsGames();
     },
@@ -92138,6 +92137,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 //                    console.log(response);
                 var data = response.data;
                 _this.carouselGames = data.games;
+                console.log('carouselImages : ' + _this.carouselGames);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -92153,8 +92153,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        handleClick: function handleClick(id) {
-            this.$router.push({ path: '/game/${id}', params: { id: id } });
+        handleClick: function handleClick(Id) {
+            var id = Id;
+            this.$router.push({ path: '/game/' + id });
+            //                this.$router.push({name:'gameDetail',params:{id:Id}});
         }
     }
 });
@@ -93178,32 +93180,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            carouselGames: '',
+            game: {
+                //                    name:'',
+            },
+            carouselImages: [],
+            Image: '',
             background: {
-                backgroundImage: "url(" + 'http://www.gamestore.com/uploads/images/Celeste.jpg' + ")",
+                backgroundImage: '',
                 backgroundRepeat: "no-repeat",
-                backgroundSize: "100% auto"
+                backgroundSize: "100% auto",
+                backgroundColor: '#e8e8e8'
             }
         };
     },
 
     mounted: function mounted() {
         this.getGameDetail();
-        this.getCarouselGames();
     },
     methods: {
-        getGameDetail: function getGameDetail() {},
-        getCarouselGames: function getCarouselGames() {
+        getGameDetail: function getGameDetail() {
             var _this = this;
-            axios.get('/getCarouselGames').then(function (response) {
-                //                    console.log(response);
+            var Id = _this.$route.params.id;
+            axios.post('/game/' + Id, {
+                id: Id
+            }).then(function (response) {
                 var data = response.data;
-                _this.carouselGames = data.games;
+                _this.game = data.game;
+                _this.background.backgroundImage = "url('" + data.game.background_image + "')";
+                _this.carouselImages = data.game.images;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -93229,13 +93237,13 @@ var render = function() {
           "div",
           { staticClass: "messageBox" },
           [
-            _c("h2", [_vm._v("怪物猎人:世界")]),
+            _c("h2", [_vm._v(_vm._s(_vm.game.name))]),
             _vm._v(" "),
-            _c("p", [_vm._v("游戏类型:动作游戏")]),
+            _c("p", [_vm._v("游戏类型:" + _vm._s(_vm.game.category.name))]),
             _vm._v(" "),
-            _c("p", [_vm._v("游戏售价:100")]),
+            _c("p", [_vm._v("游戏售价:" + _vm._s(_vm.game.price))]),
             _vm._v(" "),
-            _c("p", [_vm._v("发售日期:2018-01-02")]),
+            _c("p", [_vm._v("发售日期:" + _vm._s(_vm.game.issue_date))]),
             _vm._v(" "),
             _c("el-button", { attrs: { type: "text" } }, [_vm._v("立即购买")]),
             _vm._v(" "),
@@ -93254,9 +93262,9 @@ var render = function() {
           _c(
             "el-carousel",
             { attrs: { "indicator-position": "outside" } },
-            _vm._l(_vm.carouselGames, function(item, index) {
+            _vm._l(_vm.carouselImages, function(item, index) {
               return _c("el-carousel-item", { key: index }, [
-                _c("img", { staticClass: "image", attrs: { src: item.image } })
+                _c("img", { staticClass: "image", attrs: { src: item } })
               ])
             })
           )

@@ -16,7 +16,7 @@ class GameController extends Controller
             $data[$i] = array(
                 'id'=>$games[$i]['id'] ,
                 'name'=>$games[$i]['name'] ,
-                'image'=>env('APP_URL').'uploads/'. $games[$i]['background_image'] ,
+                'image'=> $games[$i]['background_image'] ,
                 );
         }
         return response()->json([
@@ -32,7 +32,7 @@ class GameController extends Controller
             $data[$i] = array(
                 'id'=>$games[$i]['id'] ,
                 'name'=>$games[$i]['name'] ,
-                'image'=> env('APP_URL').'uploads/'.$games[$i]['image'] ,
+                'image'=> $games[$i]['image'] ,
                 'price'=> $games[$i]['price'] ,
             );
         }
@@ -41,10 +41,18 @@ class GameController extends Controller
         ]);
     }
 
-    public function game(){
-        $game =Game::find($_POST['id']);
+    public function game(Request $request){
+
+        $game =Game::find($request->post('id'));
+        $game['category'] = $game->category ;
+//        $game['image'] = $game->image ;
+//        $game['images'] = $game->images ;
+//        $category = $game->category ;
         return response()->json([
-            'game' => $game ,
+            'game'=>$game,
+//            'category' => $category,
+//            'image' => $game->image ,
+//            'images' => $game->images
          ]);
     }
 }

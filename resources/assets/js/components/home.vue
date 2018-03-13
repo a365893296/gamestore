@@ -45,7 +45,6 @@
             }
         },
         mounted: function () {
-            console.log('mounted')
             this.getCarouselGames();
             this.getCardsGames();
         },
@@ -57,6 +56,7 @@
 //                    console.log(response);
                     let data = response.data ;
                     _this.carouselGames = data.games ;
+                    console.log('carouselImages : '+_this.carouselGames);
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -72,8 +72,10 @@
                     console.log(error);
                 });
             },
-            handleClick:function(id){
-                this.$router.push({path:'/game/${id}', params:{id}});
+            handleClick:function(Id){
+                const id = Id ;
+                this.$router.push({path:`/game/${id}`});
+//                this.$router.push({name:'gameDetail',params:{id:Id}});
             }
         }
     }

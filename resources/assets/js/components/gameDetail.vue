@@ -2,19 +2,18 @@
     <el-row  :style="background">
         <el-col :span="6" :offset="15">
             <div class="messageBox">
-                <h2>怪物猎人:世界</h2>
-                <p>游戏类型:动作游戏</p>
-                <p>游戏售价:100</p>
-                <p>发售日期:2018-01-02</p>
+                <h2>{{game.name}}</h2>
+                <p>游戏类型:{{game.category.name}}</p>
+                <p>游戏售价:{{game.price}}</p>
+                <p>发售日期:{{game.issue_date}}</p>
                 <el-button type="text">立即购买</el-button>
                 <el-button type="success">加入购物车</el-button>
             </div>
         </el-col>
         <el-col :span="12" :offset="3">
                 <el-carousel indicator-position="outside">
-                    <el-carousel-item v-for="(item,index) in carouselGames" :key="index" >
-                        <img :src="item.image" class="image">
-
+                    <el-carousel-item v-for="(item,index) in carouselImages" :key="index" >
+                        <img :src="item" class="image">
                     </el-carousel-item>
                 </el-carousel>
         </el-col>
@@ -27,28 +26,33 @@
     export default{
         data(){
             return {
-                carouselGames:'',
+                game:{
+//                    name:'',
+                },
+                carouselImages:[] ,
+                Image:'',
                 background: {
-                    backgroundImage: "url(" +('http://www.gamestore.com/uploads/images/Celeste.jpg') + ")",
+                    backgroundImage : '',
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "100% auto",
+                    backgroundColor: '#e8e8e8',
                 },
             }
         },
         mounted: function () {
             this.getGameDetail();
-            this.getCarouselGames();
         },
         methods: {
             getGameDetail: function () {
-
-            },
-            getCarouselGames: function () {
                 let _this = this;
-                axios.get('/getCarouselGames').then((response) => {
-//                    console.log(response);
+                const Id = _this.$route.params.id;
+                axios.post('/game/'+Id,{
+                    id:Id,
+                }).then((response) => {
                     let data = response.data ;
-                    _this.carouselGames = data.games ;
+                    _this.game = data.game ;
+                    _this.background.backgroundImage ="url('"+ data.game.background_image+"')";
+                    _this.carouselImages = data.game.images ;
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -60,7 +64,6 @@
 
 
 <style scoped>
-
     .messageBox {
         border-radius:1px;
         background-color: #e4e4e4;
