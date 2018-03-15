@@ -27,7 +27,6 @@
                     <el-menu-item index="2-2">选项2</el-menu-item>
                     <el-menu-item index="2-3">选项3</el-menu-item>
                 </el-submenu>
-
                     <el-menu-item index="login">登录</el-menu-item>
                     <!--<el-menu-item index="4">注册</el-menu-item>-->
 
@@ -38,14 +37,18 @@
 </template>
 
 <script>
+    import store from '.././store.js'
     export default {
         data() {
             return {
                 select: '',
                 input: '',
                 activeIndex: '1',
-
+                user:store.getters.user.name,
             }
+        },
+        mounted:function(){
+                this.consss(1);
         },
         methods: {
             handleSelect(key){
@@ -54,6 +57,9 @@
                 }else if(key=='home'){
                     this.$router.push({name:'home'});
                 }
+            },
+            consss(i){
+                console.log(this.user);
             }
         }
 

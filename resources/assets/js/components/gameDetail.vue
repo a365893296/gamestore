@@ -10,12 +10,15 @@
                 <el-button type="success">加入购物车</el-button>
             </div>
         </el-col>
-        <el-col :span="12" :offset="3">
+        <el-col :span="12" :offset="3" style="margin-top: 3%;">
                 <el-carousel indicator-position="outside">
                     <el-carousel-item v-for="(item,index) in carouselImages" :key="index" >
                         <img :src="item" class="image">
                     </el-carousel-item>
                 </el-carousel>
+        </el-col>
+        <el-col :span="5" :offset="1">
+
         </el-col>
 
 

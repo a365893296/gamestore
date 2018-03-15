@@ -23,10 +23,13 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 
 import router from './router.js'
+import store from './store.js'
+
 Vue.use(ElementUI)
 
 const app = new Vue({
     el: '#app' ,
     router ,
+    store
 });
 

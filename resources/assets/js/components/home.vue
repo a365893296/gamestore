@@ -2,35 +2,32 @@
     <el-row style="margin-top: 1%;">
         <el-col :span="18" :offset="3">
             <el-carousel indicator-position="outside">
-                <el-carousel-item v-for="(item,index) in carouselGames" :key="index" >
+                <el-carousel-item v-for="(item,index) in carouselGames" :key="index">
                     <img :src="item.image" class="image">
 
                 </el-carousel-item>
             </el-carousel>
         </el-col>
 
-        <el-row style="margin-top: 2%;">
-            <el-col :span="6" v-for="(o, index) in cardsGames" :key="index" :offset="index/3 > 0 ? 1 : 2">
-                <el-card :body-style="{ padding: '0px' }">
-                    <img :src="o.image" class="image">
-                    <div style="padding: 14px;">
-                        <span>{{o.name}}</span>
-                        <div class="bottom clearfix">
-                            <span>价格:{{o.price}}</span>
-                            <el-button type="text" class="button">购买</el-button>
-                            <el-button type="text" class="button" @click="handleClick(o.id)">详情</el-button>
-                        </div>
+        <el-col :span="6" v-for="(o, index) in cardsGames" :key="index" :offset="index%3 > 0 ? 1 : 2" style="margin-top: 1%;">
+            <el-card :body-style="{ padding: '0px' }">
+                <img :src="o.image" class="image">
+                <div style="padding: 14px;">
+                    <span>{{o.name}}</span>
+                    <div class="bottom clearfix">
+                        <span>价格:{{o.price}}</span>
+                        <el-button type="text" class="button">购买</el-button>
+                        <el-button type="text" class="button" @click="handleClick(o.id)">详情</el-button>
                     </div>
-                </el-card>
-            </el-col>
-        </el-row>
+                </div>
+            </el-card>
+        </el-col>
 
-        <hr>
         <!--<img src="../../image/game.png" style="width: 15%">-->
         <!--<el-row type="flex" justify="center" :gutter="30">-->
-            <!--<el-col :span="3">-->
-                <!--<img v-for="image in images2" v-bind:src="image.url" alt="">-->
-            <!--</el-col>-->
+        <!--<el-col :span="3">-->
+        <!--<img v-for="image in images2" v-bind:src="image.url" alt="">-->
+        <!--</el-col>-->
         <!--</el-row>-->
 
     </el-row>
@@ -53,8 +50,8 @@
             getCarouselGames: function () {
                 let _this = this;
                 axios.get('/getCarouselGames').then((response) => {
-                    let data = response.data ;
-                    _this.carouselGames = data.games ;
+                    let data = response.data;
+                    _this.carouselGames = data.games;
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -63,15 +60,15 @@
             getCardsGames: function () {
                 let _this = this;
                 axios.get('/getCardsGames').then((response) => {
-                    let data = response.data ;
-                    _this.cardsGames = data.games ;
+                    let data = response.data;
+                    _this.cardsGames = data.games;
                 }).catch((error) => {
                     console.log(error);
                 });
             },
-            handleClick:function(Id){
-                const id = Id ;
-                this.$router.push({path:`/game/${id}`});
+            handleClick: function (Id) {
+                const id = Id;
+                this.$router.push({path: `/game/${id}`});
             }
         }
     }

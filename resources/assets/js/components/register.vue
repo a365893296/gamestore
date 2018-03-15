@@ -15,6 +15,9 @@
                         <el-form-item label="邮箱" prop="邮箱">
                             <el-input v-model="registerForm.email"></el-input>
                         </el-form-item>
+                        <el-form-item label="用户名" prop="用户名">
+                            <el-input v-model="registerForm.name"></el-input>
+                        </el-form-item>
 
                         <el-form-item label="密码" prop="password">
                             <el-input v-model="registerForm.password" type="password"></el-input>
@@ -22,10 +25,6 @@
 
                         <el-form-item label="确认密码" prop="checkPassword">
                             <el-input v-model="registerForm.checkPassword" type="password"></el-input>
-                        </el-form-item>
-
-                        <el-form-item label="手机号码" prop="phone">
-                            <el-input v-model="registerForm.phone"></el-input>
                         </el-form-item>
 
                         <el-form-item label="验证码" prop="verifyCode">
@@ -67,9 +66,9 @@
 
                 registerForm: {
                     email: '',
+                    name: '',
                     password: '',
                     checkPassword: '',
-                    phone: '',
                     verifyCode: '',
                 },
 
@@ -77,6 +76,13 @@
                     email: [
                         {
                             required: true, message: '请输入邮箱', trigger: 'blur',
+                        }, {
+                            min: 4, max: 20, message: '长度在 4 - 20 之间', trigger: 'blur',
+                        }
+                    ],
+                    name: [
+                        {
+                            required: true, message: '请输入用户名', trigger: 'blur',
                         }, {
                             min: 4, max: 20, message: '长度在 4 - 20 之间', trigger: 'blur',
                         }
@@ -94,11 +100,6 @@
                             required: true, message: '重新确认密码', trigger: 'blur',
                         }, {
                             validator: validatePassword, trigger: 'blur',
-                        }
-                    ],
-                    phone: [
-                        {
-                            required: true, message: '请输入电话号码', trigger: 'blur',
                         }
                     ],
                     verifyCode: [
@@ -121,7 +122,7 @@
                             axios.post('/register', {
                                 'email': formName.email,
                                 'password': formName.password,
-                                'phone': formName.phone
+                                'name': formName.name
                             }).then(function (response) {
                                 var data = response.data;
                                 if (data.isRegister) {
@@ -144,6 +145,11 @@
 
                             }).catch(function (error) {
                                 console.log(error);
+                                _this.$message({
+                                    showClose: true,
+                                    message: error.message,
+                                    type: 'error'
+                                })
                             })
 
                         }
@@ -182,7 +188,7 @@
     #background {
         display: table;
         width: 100%;
-        @height: 100%;
+    @height: 100 %;
         padding: 0px 0;
         text-align: center;
         /*color: #fff ;*/

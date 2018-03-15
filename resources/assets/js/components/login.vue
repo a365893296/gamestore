@@ -74,26 +74,26 @@
             }
         },
         methods: {
-//            login(formName) {
-//                let _this = this;
-//                axios.post('/login', {
-//                    'email': formName.email,
-//                    'password': formName.password
-//                }).then(function (response) {
-//                    var data = response.data ;
-//                    _this.$store.commit('SETUSER',data.user) ;
-//                    if (data.islogin) {
-//                        _this.$router.push({path: '/home'})
-//                    } else {
-//                        _this.$message({
-//                            message: '用户名或密码错误',
-//                            type: 'error'
-//                        })
-//                    }
-//                }).catch(function (error) {
-//                    console.log(error)
-//                })
-//            },
+            login(formName) {
+                let _this = this;
+                axios.post('/login', {
+                    'email': formName.email,
+                    'password': formName.password
+                }).then(function (response) {
+                    var data = response.data ;
+                    _this.$store.commit('SETUSER',data.user) ;
+                    if (data.islogin) {
+                        _this.$router.push({path: '/home'})
+                    } else {
+                        _this.$message({
+                            message: '用户名或密码错误',
+                            type: 'error'
+                        })
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            },
 
             showRegisterForm: function () {
                 router.push({path: 'register'})
