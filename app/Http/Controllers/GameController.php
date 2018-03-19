@@ -11,13 +11,13 @@ class GameController extends Controller
     public function getCarouselGames()
     {
         $games = Game::orderBy('id', 'desc')->take(3)->get();
-        $data = array() ;
-        for($i = 0 ; $i<count($games); $i++){
+        $data = array();
+        for ($i = 0; $i < count($games); $i++) {
             $data[$i] = array(
-                'id'=>$games[$i]['id'] ,
-                'name'=>$games[$i]['name'] ,
-                'image'=> $games[$i]['background_image'] ,
-                );
+                'id' => $games[$i]['id'],
+                'name' => $games[$i]['name'],
+                'image' => $games[$i]['background_image'],
+            );
         }
         return response()->json([
             'games' => $data,
@@ -27,13 +27,13 @@ class GameController extends Controller
     public function getCardsGames()
     {
         $games = Game::orderBy('id', 'desc')->take(6)->get();
-        $data = array() ;
-        for($i = 0 ; $i<count($games); $i++){
+        $data = array();
+        for ($i = 0; $i < count($games); $i++) {
             $data[$i] = array(
-                'id'=>$games[$i]['id'] ,
-                'name'=>$games[$i]['name'] ,
-                'image'=> $games[$i]['image'] ,
-                'price'=> $games[$i]['price'] ,
+                'id' => $games[$i]['id'],
+                'name' => $games[$i]['name'],
+                'image' => $games[$i]['image'],
+                'price' => $games[$i]['price'],
             );
         }
         return response()->json([
@@ -41,19 +41,37 @@ class GameController extends Controller
         ]);
     }
 
-    public function game(Request $request){
+    public function game(Request $request)
+    {
 
-        $game =Game::find($request->post('id'));
-        $game['category'] = $game->category ;
+        $game = Game::find($request->post('id'));
+        $game['category'] = $game->category;
 //        $game['image'] = $game->image ;
 //        $game['images'] = $game->images ;
 //        $category = $game->category ;
         return response()->json([
-            'game'=>$game,
+            'game' => $game,
 //            'category' => $category,
 //            'image' => $game->image ,
 //            'images' => $game->images
-         ]);
+        ]);
+    }
+
+    public function getGameList(Request $request)
+    {
+        $games = Game::orderBy('id', 'desc')->take(6)->get();
+        $data = array();
+        for ($i = 0; $i < count($games); $i++) {
+            $data[$i] = array(
+                'id' => $games[$i]['id'],
+                'name' => $games[$i]['name'],
+                'image' => $games[$i]['image'],
+                'price' => $games[$i]['price'],
+            );
+        }
+        return response()->json([
+            'games' => $data,
+        ]);
     }
 }
 

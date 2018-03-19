@@ -25,6 +25,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/getCarouselGames','gameController@getCarouselGames');
 Route::get('/getCardsGames','gameController@getCardsGames');
 
+Route::get('/getGameList','gameController@getGameList');
+
 Route::post('/game/{id}','gameController@game');
 
 //Route::group(['middleware'=> config('admin.route.middleware')],function(){

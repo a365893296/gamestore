@@ -17,7 +17,7 @@
                     <div class="bottom clearfix">
                         <span>价格:{{o.price}}</span>
                         <el-button type="text" class="button">购买</el-button>
-                        <el-button type="text" class="button" @click="handleClick(o.id)">详情</el-button>
+                        <el-button type="text" class="button" @click="showGameDetail(o.id)">详情</el-button>
                     </div>
                 </div>
             </el-card>
@@ -66,7 +66,7 @@
                     console.log(error);
                 });
             },
-            handleClick: function (Id) {
+            showGameDetail: function (Id) {
                 const id = Id;
                 this.$router.push({path: `/game/${id}`});
             }
