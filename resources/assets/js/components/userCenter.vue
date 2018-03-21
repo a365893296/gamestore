@@ -16,7 +16,7 @@
         </el-col>
 
         <el-col :span="20" :offset="2">
-            <el-tabs v-model="activeName" @tab-click="tabClick">
+            <el-tabs v-model="activeName" @tab-click="handleClick">
                 <el-tab-pane label="已购买" name="first">
                     <el-col :span="6" v-for="(o, index) in games" :key="index" :offset="index%3 > 0 ? 1 : 2"
                             style="margin-top: 1%;">
@@ -88,6 +88,9 @@
             },
             tabClick: function () {
 
+            },
+            handleClick(tab, event) {
+                console.log(tab, event);
             }
 
         }
