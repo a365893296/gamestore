@@ -94724,21 +94724,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -94774,16 +94759,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         //            this.user = this.$store.getters.user
-        this.getGameList();
-        this.getClickGameList();
+        this.getMyGameList();
     },
     methods: {
         //获取已购买的游戏
-        getGameList: function getGameList() {
+        getMyGameList: function getMyGameList() {
             var _this = this;
-            console.log(this.user.id);
-            axios.post('/getGameList', {
-                id: _this.user.id
+            console.log(_this.user.id);
+            axios.post('/getMyGameList', {
+                user_id: _this.user.id
             }).then(function (response) {
                 var data = response.data;
                 _this.games = data.games;
@@ -94799,19 +94783,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         tabClick: function tabClick() {},
         handleClick: function handleClick(tab, event) {
             console.log(tab, event);
-            this.getGameList();
-        },
-
-        getClickGameList: function getClickGameList() {
-            var _this = this;
-            axios.post('/getGameList').then(function (response) {
-                var data = response.data;
-                _this.games = data.games;
-            }).catch(function (error) {
-                console.log(error);
-            });
+            //                this.getGameList();
         }
-
     }
 });
 
@@ -94871,68 +94844,6 @@ var render = function() {
               _c(
                 "el-tab-pane",
                 { attrs: { label: "已购买", name: "first" } },
-                _vm._l(_vm.games, function(o, index) {
-                  return _c(
-                    "el-col",
-                    {
-                      key: index,
-                      staticStyle: { "margin-top": "1%" },
-                      attrs: { span: 6, offset: index % 3 > 0 ? 1 : 2 }
-                    },
-                    [
-                      _c(
-                        "el-card",
-                        { attrs: { "body-style": { padding: "0px" } } },
-                        [
-                          _c("img", {
-                            staticClass: "image",
-                            attrs: { src: o.image }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticStyle: { padding: "14px" } }, [
-                            _c("span", [_vm._v(_vm._s(o.name))]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "bottom clearfix" },
-                              [
-                                _c(
-                                  "el-button",
-                                  {
-                                    staticClass: "button",
-                                    attrs: { type: "text" }
-                                  },
-                                  [_vm._v("下载")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "el-button",
-                                  {
-                                    staticClass: "button",
-                                    attrs: { type: "text" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.showGameDetail(o.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("详情")]
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        ]
-                      )
-                    ],
-                    1
-                  )
-                })
-              ),
-              _vm._v(" "),
-              _c(
-                "el-tab-pane",
-                { attrs: { label: "点赞过的游戏", name: "second" } },
                 _vm._l(_vm.games, function(o, index) {
                   return _c(
                     "el-col",

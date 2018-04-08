@@ -33,6 +33,7 @@ Route::group(['middleware' =>'auth'],function(){
     Route::post('/getUserInfo' , 'UserController@getUserInfo');
     Route::post('/purchase' , 'UserGameController@purchase') ;
     Route::post('/getPurchased', 'UserGameController@getPurchased') ;
+    Route::post('/getMyGameList', 'UserController@getMyGameList') ;
 });
 
 

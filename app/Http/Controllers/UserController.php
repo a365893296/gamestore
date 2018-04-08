@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
+use App\Models\UserPurchase;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -99,6 +101,20 @@ class UserController extends Controller
                 'user' => null,
             ]);
         }
+    }
+
+    public function getMyGameList(Request $request)
+    {
+        $user_id = $request->post('user_id');
+        $column = array('games.id', 'name', 'image', 'price', 'rate');
+        $games = Game::select($column)
+            ->join('purchase_history', 'games.id','=','purchase_history.game_id')
+            ->where(['user_id'=> $user_id])
+            ->orderBy('id', 'desc')
+            ->get();
+        return response()->json([
+            'games' => $games,
+        ]);
     }
 
 
