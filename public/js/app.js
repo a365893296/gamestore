@@ -94390,11 +94390,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             game: {
+                id: this.$route.params.id,
                 name: '',
                 category: {
                     name: ''
@@ -94402,6 +94414,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 price: 0,
                 issue_date: ''
             },
+            isPurchased: '',
             carouselImages: [],
             Image: '',
             background: {
@@ -94415,6 +94428,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     mounted: function mounted() {
         this.getGameDetail();
+        this.getPurchased();
     },
     methods: {
         getGameDetail: function getGameDetail() {
@@ -94483,7 +94497,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     game_id: this.game.id
                 }).then(function (response) {
                     var data = response.data;
-                    console.log(data);
+                    _this.isPurchased = data.isPurchased;
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -94518,21 +94532,48 @@ var render = function() {
             _vm._v(" "),
             _c("p", [_vm._v("发售日期:" + _vm._s(_vm.game.issue_date))]),
             _vm._v(" "),
-            _c("el-rate", {
-              attrs: {
-                "show-score": "",
-                "text-color": "#ff9900",
-                "score-template": "{value}",
-                disabled: ""
-              },
-              model: {
-                value: _vm.game.rate,
-                callback: function($$v) {
-                  _vm.$set(_vm.game, "rate", $$v)
-                },
-                expression: "game.rate"
-              }
-            }),
+            _vm.isPurchased > 0
+              ? _c(
+                  "div",
+                  [
+                    _c("el-rate", {
+                      attrs: {
+                        "show-score": "",
+                        "text-color": "#ff9900",
+                        "score-template": "{value}"
+                      },
+                      model: {
+                        value: _vm.game.rate,
+                        callback: function($$v) {
+                          _vm.$set(_vm.game, "rate", $$v)
+                        },
+                        expression: "game.rate"
+                      }
+                    })
+                  ],
+                  1
+                )
+              : _c(
+                  "div",
+                  [
+                    _c("el-rate", {
+                      attrs: {
+                        "show-score": "",
+                        "text-color": "#ff9900",
+                        "score-template": "{value}",
+                        disabled: ""
+                      },
+                      model: {
+                        value: _vm.game.rate,
+                        callback: function($$v) {
+                          _vm.$set(_vm.game, "rate", $$v)
+                        },
+                        expression: "game.rate"
+                      }
+                    })
+                  ],
+                  1
+                ),
             _vm._v(" "),
             _c(
               "el-button",

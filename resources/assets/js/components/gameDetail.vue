@@ -6,12 +6,23 @@
                 <p>游戏类型:{{game.category.name}}</p>
                 <p>游戏售价:{{game.price}}</p>
                 <p>发售日期:{{game.issue_date}}</p>
-                <el-rate v-model="game.rate"
-                         show-score
-                         text-color="#ff9900"
-                         score-template="{value}"
-                         disabled>
-                </el-rate>
+                <div v-if="isPurchased > 0">
+                    <el-rate v-model="game.rate"
+                             show-score
+                             text-color="#ff9900"
+                             score-template="{value}"
+                    >
+                    </el-rate>
+                </div>
+                <div v-else>
+                    <el-rate v-model="game.rate"
+                             show-score
+                             text-color="#ff9900"
+                             score-template="{value}"
+                             disabled>
+                    </el-rate>
+                </div>
+
                 <!--<el-rate v-else>-->
                 <!--v-model="value3"-->
                 <!--show-text-->
@@ -40,6 +51,7 @@
         data(){
             return {
                 game: {
+                    id: this.$route.params.id,
                     name: '',
                     category: {
                         name: '',
@@ -47,6 +59,7 @@
                     price: 0,
                     issue_date: '',
                 },
+                isPurchased: '',
                 carouselImages: [],
                 Image: '',
                 background: {
@@ -59,6 +72,7 @@
         },
         mounted: function () {
             this.getGameDetail();
+            this.getPurchased();
         },
         methods: {
             getGameDetail: function () {
@@ -127,7 +141,7 @@
                         game_id: this.game.id,
                     }).then((response) => {
                         let data = response.data;
-                        console.log(data)
+                        _this.isPurchased = data.isPurchased;
                     }).catch((error) => {
                         console.log(error)
                     })

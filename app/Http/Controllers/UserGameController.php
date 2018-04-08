@@ -81,7 +81,7 @@ class UserGameController extends Controller
         $game = UserPurchase::getPurchased($user_id,$game_id) ;
 
         return response()->json([
-            'isPurchased' =>  $game ,
+            'isPurchased' => count($game) ,
             'status' => 'success' ,
             'status_code' => 200
         ]);

@@ -12,10 +12,13 @@ class UserPurchase extends Model
         'game_id', 'user_id', 'cost'
     ];
 
-    public function getPurchased($user_id , $game_id)
+    public static function getPurchased($user_id, $game_id)
     {
-        $game =  UserPurchase::find(['user_id' => $user_id , 'game_id' => $game_id]);
-        return $game ;
+        $game = UserPurchase::where([
+            'user_id' => $user_id,
+            'game_id' => $game_id
+        ])->first();
+        return $game;
     }
 
 }
