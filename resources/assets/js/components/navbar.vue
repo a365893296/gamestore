@@ -18,18 +18,15 @@
                     <el-input v-model="input" placeholder="sss" size="small" suffix-icon="el-icon-search"></el-input>
                 </el-col>
                 <el-col :span="3" :offset="4">
-                    <el-menu-item index="home" >首页</el-menu-item>
+                    <el-menu-item index="home">首页</el-menu-item>
                 </el-col>
-            <!--todo 先这样吧 后面再改-->
-                <!--<el-submenu index="userCenter">-->
-                    <!--<template slot="title">个人中心</template>-->
-                    <!--<el-menu-item index="2-1">选项1</el-menu-item>-->
-                    <!--<el-menu-item index="2-2">选项2</el-menu-item>-->
-                    <!--<el-menu-item index="2-3">选项3</el-menu-item>-->
-                <!--</el-submenu>-->
-                    <el-menu-item index="user_center">个人中心</el-menu-item>
-                    <el-menu-item index="login">登录</el-menu-item>
-                    <!--<el-menu-item index="4">注册</el-menu-item>-->
+                <el-menu-item index="user_center" v-if="user!=null " >个人中心</el-menu-item>
+
+                <el-menu-item index="logout" v-if="user!=null">登出</el-menu-item>
+                <el-menu-item index="login" v-else>登录</el-menu-item>
+
+
+                <!--<el-menu-item index="4">注册</el-menu-item>-->
 
             </el-menu>
         </el-col>
@@ -38,32 +35,66 @@
 </template>
 
 <script>
-    import store from '.././store.js'
+    import store from '.././store'
     export default {
         data() {
             return {
                 select: '',
                 input: '',
                 activeIndex: '1',
-                user:store.getters.user.name,
+//                user:'',
+//                user: {
+//                    id: '' ,
+//                    name: ''
+//                },
             }
         },
-        mounted:function(){
-                this.consss(1);
+        computed:{
+            user : function(){
+                return store.getters.user.name ;
+                console.log('mounted :  ' +this.user.length );
+            }
+        },
+        mounted: function () {
+//          this.user = this.$store.getters.user ;
+//
+//          this.user.id = this.$store.getters.user.id ;
+//            console.log('mounted :  ' +this.user.length );
         },
         methods: {
             handleSelect(key){
-                if(key == 'login'){
-                    this.$router.push({name:'login'});
-                }else if(key=='home'){
-                    this.$router.push({name:'home'});
-                }else if(key == 'userCenter'){
-                    this.$router.push({name:'userCenter'});
+                if (key == 'login') {
+                    this.$router.push({name: 'login'});
+                } else if (key == 'home') {
+                    this.$router.push({name: 'home'});
+                } else if (key == 'user_center') {
+                    this.$router.push({name: 'userCenter'});
+                }else if(key == 'logout'){
+                    let _this = this;
+                    this.$confirm('是否退出系统?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+
+                        axios.post('/logout', {}).then((response) => {
+                            if (response.data.isLogout) {
+                                _this.$store.commit('DELETEUSER');
+                                _this.$router.push('/login');
+                            }
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消'
+                        });
+
+                    })
                 }
             },
-            consss(i){
-                console.log(this.user);
-            }
         }
 
     }

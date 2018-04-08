@@ -25,10 +25,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/getCarouselGames','gameController@getCarouselGames');
 Route::get('/getCardsGames','gameController@getCardsGames');
 
-Route::get('/getGameList','gameController@getGameList');
 
 Route::post('/game/{id}','gameController@game');
 
-//Route::group(['middleware'=> config('admin.route.middleware')],function(){
-//    Route::get('/api/getCategories', 'CategoryController@getCategories') ;
-//});
+Route::group(['middleware' =>'auth'],function(){
+    Route::post('/getGameList','gameController@getGameList');
+    Route::post('/getUserInfo' , 'UserController@getUserInfo');
+    Route::post('/purchase' , 'UserGameController@purchase') ;
+    Route::post('/getPurchased', 'UserGameController@getPurchased') ;
+});
+
+
+

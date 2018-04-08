@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-    //
+    /**
+     * home 页走马灯游戏
+     */
     public function getCarouselGames()
     {
         $games = Game::orderBy('id', 'desc')->take(3)->get();
@@ -24,6 +26,9 @@ class GameController extends Controller
         ]);
     }
 
+    /**
+     * home页 游戏
+     */
     public function getCardsGames()
     {
         $games = Game::orderBy('id', 'desc')->take(6)->get();
@@ -57,8 +62,12 @@ class GameController extends Controller
         ]);
     }
 
+    /**
+     * userCenter 用户已购买的游戏
+     */
     public function getGameList(Request $request)
     {
+        $user_id = $request->post('id') ;
         $games = Game::orderBy('id', 'desc')->take(6)->get();
         $data = array();
         for ($i = 0; $i < count($games); $i++) {

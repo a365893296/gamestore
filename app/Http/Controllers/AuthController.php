@@ -32,6 +32,8 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
+
+
         return response()->json([
             'status' => 'success',
             'status_code' => '200',

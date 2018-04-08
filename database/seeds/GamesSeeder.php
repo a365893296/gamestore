@@ -11,6 +11,6 @@ class GamesSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Models\Game',100)->create() ;
+        factory('App\Models\Game',3000)->create() ;
     }
 }

@@ -22,6 +22,7 @@ class CreateGamesTable extends Migration
             $table->float('discount_price')->nullable();
             $table->string('description' , '200')->nullable();
             $table->dateTime('issue_date')->nullable();
+            $table->float('rate')->nullable();
 
             $table->string('image')->nullable();
             $table->string('images')->nullable();

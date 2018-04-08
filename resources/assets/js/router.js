@@ -13,19 +13,35 @@ import Register from './components/register.vue'
 import GameDetail from './components/gameDetail.vue'
 import UserCenter from './components/userCenter.vue'
 
+import store from './store'
+
+export const auth = (to, from, next) => {
+
+    if (store.getters.user.id) {
+        next();
+    } else {
+        router.push({
+            path: '/login',
+            query: {
+                forward: to.path,
+            }
+        })
+    }
+}
+
 const router = new Router({
     routes: [
         {
             path: '/',
             redirect: '/home'
-        },{
-            path:'/home' ,
-            name: 'home' ,
-            component:Home,
-        },{
-            path:'/shopping_cart',
+        }, {
+            path: '/home',
+            name: 'home',
+            component: Home,
+        }, {
+            path: '/shopping_cart',
             // name:shopping_cart ,
-        },{
+        }, {
             path: '/login',
             name: 'login',
             component: Login,
@@ -33,15 +49,19 @@ const router = new Router({
             path: '/register',
             name: 'register',
             component: Register,
-        },{
-            path:'/game/:id' ,
-            name: 'gameDetail' ,
-            component:GameDetail,
-        },{
-            path:'/user_center',
-            name:'userCenter' ,
-            component:UserCenter,
-        }
+        }, {
+            path: '/game/:id',
+            name: 'gameDetail',
+            component: GameDetail,
+        }, {
+            path: '/user_center',
+            name: 'userCenter',
+            component: UserCenter,
+            beforeEnter: auth ,
+        }, {
+            path: '/logout',
+            name: 'logout',
+        },
     ]
 })
 

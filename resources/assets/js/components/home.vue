@@ -9,14 +9,20 @@
             </el-carousel>
         </el-col>
 
-        <el-col :span="6" v-for="(o, index) in cardsGames" :key="index" :offset="index%3 > 0 ? 1 : 2" style="margin-top: 1%;">
+        <el-col :span="6" v-for="(o, index) in cardsGames" :key="index" :offset="index%3 > 0 ? 1 : 2"
+                style="margin-top: 1%;">
             <el-card :body-style="{ padding: '0px' }">
                 <img :src="o.image" class="image">
                 <div style="padding: 14px;">
                     <span>{{o.name}}</span>
                     <div class="bottom clearfix">
+                        <el-rate
+                                v-model="o.rate"
+                                show-text
+                        disabled>
+                        </el-rate>
                         <span>价格:{{o.price}}</span>
-                        <el-button type="text" class="button">购买</el-button>
+                        <el-button type="text" class="button" @click="purchase(o)">购买</el-button>
                         <el-button type="text" class="button" @click="showGameDetail(o.id)">详情</el-button>
                     </div>
                 </div>
@@ -69,6 +75,60 @@
             showGameDetail: function (Id) {
                 const id = Id;
                 this.$router.push({path: `/game/${id}`});
+            },
+
+            purchase: function (game) {
+                let user = this.$store.getters.user;
+                let _this = this;
+                console.log( user.id== null);
+
+//                if (user.id == null) {
+//                    this.$alert('请先登录，以继续购买', '提示', {
+//                        confirmButtonText: '确定',
+//                        cancelButtonText: '取消',
+//                        type: 'warning'
+//                    }).then(() => {
+//                        _this.$router.push('/login');
+//                    }).catch(() => {
+//                    })
+//                }
+//                if (user.id == null) {
+//                    this.$confirm('请先登录，以继续购买', '提示', {
+//                        confirmButtonText: '确定',
+//                        cancelButtonText: '取消',
+//                        type: 'warning'
+//                    }).then(() => {
+//                        _this.$router.push('/login');
+//                    }).catch(() => {
+//                    })
+//                }
+
+                this.$confirm('确认购买此游戏吗？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'info'
+                }).then(() => {
+
+                    axios.post('/purchase', {
+                        'game': game,
+                        'user': user
+                    }).then((response) => {
+                        let data = response.data;
+                        var type = 'success';
+                        if (data.status != 'success') {
+                            var type = 'error';
+                        }
+                        this.$message({
+                            type: type,
+                            message: data.message
+                        })
+                        console.log('data : ' + data);
+                    }).catch((error) => {
+                        console.log(error)
+                    });
+
+                })
+
             }
         }
     }
