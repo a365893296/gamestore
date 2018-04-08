@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Grade;
+use App\Models\Rate;
 use App\Models\UserPurchase;
 use App\User;
 use Illuminate\Http\Request;

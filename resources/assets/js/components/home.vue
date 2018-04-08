@@ -18,7 +18,10 @@
                     <div class="bottom clearfix">
                         <el-rate
                                 v-model="o.rate"
-                                show-text
+                                show-score
+                                text-color="#ff9900"
+                                score-template="{value}"
+                                disabled>
                         disabled>
                         </el-rate>
                         <span>价格:{{o.price}}</span>

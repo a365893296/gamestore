@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class GradeSeeder extends Seeder
+class RateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class GradeSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Models\Grade',500)->create() ;
+        factory('App\Models\Rate',50)->create() ;
     }
 }

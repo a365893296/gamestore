@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGradeUserTable extends Migration
+class CreateRateUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateGradeUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('grade', function (Blueprint $table) {
+        Schema::create('rates', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('user_id')->refrence('id')->on('users');
             $table->integer('game_id')->refrence('id')->on('games');
-            $table->string('grade');
+            $table->string('rate');
 
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateGradeUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grade');
+        Schema::dropIfExists('rates');
     }
 }

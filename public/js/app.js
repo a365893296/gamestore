@@ -93223,6 +93223,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -93366,16 +93369,29 @@ var render = function() {
                   "div",
                   { staticClass: "bottom clearfix" },
                   [
-                    _c("el-rate", {
-                      attrs: { "show-text": "", disabled: "" },
-                      model: {
-                        value: o.rate,
-                        callback: function($$v) {
-                          _vm.$set(o, "rate", $$v)
+                    _c(
+                      "el-rate",
+                      {
+                        attrs: {
+                          "show-score": "",
+                          "text-color": "#ff9900",
+                          "score-template": "{value}",
+                          disabled: ""
                         },
-                        expression: "o.rate"
-                      }
-                    }),
+                        model: {
+                          value: o.rate,
+                          callback: function($$v) {
+                            _vm.$set(o, "rate", $$v)
+                          },
+                          expression: "o.rate"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    disabled>\n                    "
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("span", [_vm._v("价格:" + _vm._s(o.price))]),
                     _vm._v(" "),
@@ -94373,6 +94389,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -94501,6 +94518,22 @@ var render = function() {
             _vm._v(" "),
             _c("p", [_vm._v("发售日期:" + _vm._s(_vm.game.issue_date))]),
             _vm._v(" "),
+            _c("el-rate", {
+              attrs: {
+                "show-score": "",
+                "text-color": "#ff9900",
+                "score-template": "{value}",
+                disabled: ""
+              },
+              model: {
+                value: _vm.game.rate,
+                callback: function($$v) {
+                  _vm.$set(_vm.game, "rate", $$v)
+                },
+                expression: "game.rate"
+              }
+            }),
+            _vm._v(" "),
             _c(
               "el-button",
               {
@@ -94512,18 +94545,7 @@ var render = function() {
                 }
               },
               [_vm._v("立即购买")]
-            ),
-            _vm._v(" "),
-            _c("el-rate", {
-              attrs: { "show-text": "", disabled: "" },
-              model: {
-                value: _vm.value3,
-                callback: function($$v) {
-                  _vm.value3 = $$v
-                },
-                expression: "value3"
-              }
-            })
+            )
           ],
           1
         )

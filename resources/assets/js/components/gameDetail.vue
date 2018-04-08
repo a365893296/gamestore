@@ -6,17 +6,18 @@
                 <p>游戏类型:{{game.category.name}}</p>
                 <p>游戏售价:{{game.price}}</p>
                 <p>发售日期:{{game.issue_date}}</p>
-                <el-button type="text" @click="purchase(game)">立即购买</el-button>
-
-                <el-rate v-if=""
-                         v-model="value3"
-                         show-text
+                <el-rate v-model="game.rate"
+                         show-score
+                         text-color="#ff9900"
+                         score-template="{value}"
                          disabled>
                 </el-rate>
                 <!--<el-rate v-else>-->
                 <!--v-model="value3"-->
                 <!--show-text-->
                 <!--</el-rate>-->
+                <el-button type="text" @click="purchase(game)">立即购买</el-button>
+
             </div>
         </el-col>
         <el-col :span="12" :offset="3" style="margin-top: 3%;">
@@ -119,15 +120,15 @@
             },
             getPurchased: function () {
                 let id = this.$store.getters.user.id;
-                let _this = this ;
+                let _this = this;
                 if (id != null) {
                     axios.post('/getPurchased', {
                         user_id: id,
-                        game_id:this.game.id ,
-                    }).then((response)=>{
-                        let data = response.data ;
+                        game_id: this.game.id,
+                    }).then((response) => {
+                        let data = response.data;
                         console.log(data)
-                    }).catch((error)=>{
+                    }).catch((error) => {
                         console.log(error)
                     })
                 }
