@@ -94022,7 +94022,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             });
 
                             setTimeout(function () {
-                                _this.$router.push({ path: '/home' });
+                                _this.$router.push({ path: '/login' });
                             }, 3000);
                         } else {
                             _this.$message({

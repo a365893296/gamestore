@@ -132,7 +132,7 @@
                                     });
 
                                     setTimeout(() => {
-                                        _this.$router.push({path: '/home'})
+                                        _this.$router.push({path: '/login'})
                                     }, 3000);
 
                                 } else {
