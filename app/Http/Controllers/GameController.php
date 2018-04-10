@@ -26,7 +26,7 @@ class GameController extends Controller
     public function getCardsGames()
     {
         $column = array('id', 'name', 'image', 'price', 'rate');
-        $games = Game::select($column)->orderBy('id', 'desc')->take(6)->get();
+        $games = Game::select($column)->orderBy('id', 'desc')->take(9)->get();
         return response()->json([
             'games' => $games,
         ]);
@@ -54,7 +54,7 @@ class GameController extends Controller
     public function getGameList(Request $request)
     {
         $user_id = $request->post('id');
-        $games = Game::orderBy('id', 'desc')->take(6)->get();
+        $games = Game::orderBy('id', 'desc')->take(9)->get();
         $data = array();
         for ($i = 0; $i < count($games); $i++) {
             $data[$i] = array(

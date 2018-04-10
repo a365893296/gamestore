@@ -93226,6 +93226,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -93255,6 +93265,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
             axios.get('/getCardsGames').then(function (response) {
                 var data = response.data;
+                console.log(data);
                 _this.cardsGames = data.games;
             }).catch(function (error) {
                 console.log(error);
@@ -93363,64 +93374,91 @@ var render = function() {
               _c("img", { staticClass: "image", attrs: { src: o.image } }),
               _vm._v(" "),
               _c("div", { staticStyle: { padding: "14px" } }, [
-                _c("span", [_vm._v(_vm._s(o.name))]),
+                _c("div", { staticStyle: { height: "30px" } }, [
+                  _vm._v(_vm._s(o.name))
+                ]),
                 _vm._v(" "),
                 _c(
                   "div",
                   { staticClass: "bottom clearfix" },
                   [
                     _c(
-                      "el-rate",
-                      {
-                        attrs: {
-                          "show-score": "",
-                          "text-color": "#ff9900",
-                          "score-template": "{value}",
-                          disabled: ""
-                        },
-                        model: {
-                          value: o.rate,
-                          callback: function($$v) {
-                            _vm.$set(o, "rate", $$v)
-                          },
-                          expression: "o.rate"
-                        }
-                      },
+                      "el-row",
                       [
-                        _vm._v(
-                          "\n                    disabled>\n                    "
+                        _c("el-col", { attrs: { span: 6, offset: 6 } }, [
+                          _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                "text-align": "left",
+                                "font-size": "15px",
+                                "margin-left": "12%"
+                              }
+                            },
+                            [
+                              _vm._v("\n                                价格:"),
+                              _c(
+                                "span",
+                                { staticStyle: { color: "#ff9900" } },
+                                [_vm._v(_vm._s(o.price))]
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "el-col",
+                          {
+                            staticStyle: { "font-size": "15px" },
+                            attrs: { span: 8 }
+                          },
+                          [
+                            _vm._v("评分："),
+                            _c("span", { staticStyle: { color: "#ff9900" } }, [
+                              _vm._v(_vm._s(o.rate))
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "el-col",
+                          {
+                            staticStyle: { "margin-top": "1%" },
+                            attrs: { span: 24 }
+                          },
+                          [
+                            _c(
+                              "el-button",
+                              {
+                                staticClass: "button",
+                                attrs: { type: "text" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.purchase(o)
+                                  }
+                                }
+                              },
+                              [_vm._v("购买")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                staticClass: "button",
+                                attrs: { type: "text" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.showGameDetail(o.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("详情")]
+                            )
+                          ],
+                          1
                         )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", [_vm._v("价格:" + _vm._s(o.price))]),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        staticClass: "button",
-                        attrs: { type: "text" },
-                        on: {
-                          click: function($event) {
-                            _vm.purchase(o)
-                          }
-                        }
-                      },
-                      [_vm._v("购买")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        staticClass: "button",
-                        attrs: { type: "text" },
-                        on: {
-                          click: function($event) {
-                            _vm.showGameDetail(o.id)
-                          }
-                        }
-                      },
-                      [_vm._v("详情")]
+                      ],
+                      1
                     )
                   ],
                   1

@@ -14,19 +14,29 @@
             <el-card :body-style="{ padding: '0px' }">
                 <img :src="o.image" class="image">
                 <div style="padding: 14px;">
-                    <span>{{o.name}}</span>
+                    <div style="height:30px ;">{{o.name}}</div>
                     <div class="bottom clearfix">
-                        <el-rate
-                                v-model="o.rate"
-                                show-score
-                                text-color="#ff9900"
-                                score-template="{value}"
-                                disabled>
-                        disabled>
-                        </el-rate>
-                        <span>价格:{{o.price}}</span>
-                        <el-button type="text" class="button" @click="purchase(o)">购买</el-button>
-                        <el-button type="text" class="button" @click="showGameDetail(o.id)">详情</el-button>
+                        <!--<el-rate-->
+                                <!--v-model="o.rate"-->
+                                <!--show-score-->
+                                <!--text-color="#ff9900"-->
+                                <!--score-template="{value}"-->
+                                <!--disabled>-->
+                        <!--</el-rate>-->
+                        <el-row>
+                            <el-col :span="6" :offset="6">
+                                <div style="text-align: left; font-size: 15px;margin-left: 12%;">
+                                    价格:<span style="color: #ff9900;">{{o.price}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="8" style="font-size: 15px;">评分：<span style="color: #ff9900;">{{o.rate}}</span></el-col>
+                            <el-col :span="24" style="margin-top: 1%;">
+                                <el-button type="text" class="button" @click="purchase(o)">购买</el-button>
+                                <el-button type="text" class="button" @click="showGameDetail(o.id)">详情</el-button>
+                            </el-col>
+                        </el-row>
+
+
                     </div>
                 </div>
             </el-card>
@@ -70,6 +80,7 @@
                 let _this = this;
                 axios.get('/getCardsGames').then((response) => {
                     let data = response.data;
+                    console.log(data)
                     _this.cardsGames = data.games;
                 }).catch((error) => {
                     console.log(error);
@@ -83,7 +94,7 @@
             purchase: function (game) {
                 let user = this.$store.getters.user;
                 let _this = this;
-                console.log( user.id== null);
+                console.log(user.id == null);
 
 //                if (user.id == null) {
 //                    this.$alert('请先登录，以继续购买', '提示', {
