@@ -19,11 +19,6 @@ class UserGameController extends Controller
     {
         $game = $request->post('game');
         $user = $request->post('user');
-//        return response()->json([
-//            'message' => $user,
-//            'status' => 'failed',
-//            'status_code' => '200'
-//        ]);
 
         if (DB::table('purchase_history')->where(['game_id' => $game['id'], 'user_id' => $user['id']])->first()) {
             return response()->json([
@@ -79,9 +74,14 @@ class UserGameController extends Controller
         $game_id = $request->post('game_id');
 
         $game = UserPurchase::getPurchased($user_id,$game_id) ;
+        $rate = Rate::getRate($user_id , $game_id) ;
+//        $isPurchased = true ;
+//        if($rate){
+//            $isPurchased = flase;
+//        }
 
         return response()->json([
-            'isPurchased' => count($game) ,
+            'isPurchased' => $game && !$rate ,
             'status' => 'success' ,
             'status_code' => 200
         ]);

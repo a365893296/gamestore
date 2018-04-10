@@ -94401,6 +94401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -94502,6 +94503,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     console.log(error);
                 });
             }
+        },
+        handleChange: function handleChange() {
+            var _this = this;
+            var rate = this.game.rate;
+            var id = this.game.id;
+            var user_id = this.$store.getters.user.id;
+            axios.post('/setRate', {
+                user_id: user_id,
+                game_id: id,
+                rate: rate
+            }).then(function (response) {
+                var data = response.data;
+                _this.$message({
+                    'message': data.message,
+                    'type': data.status
+                });
+                //                    console.log(response)
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 
@@ -94541,6 +94562,11 @@ var render = function() {
                         "show-score": "",
                         "text-color": "#ff9900",
                         "score-template": "{value}"
+                      },
+                      on: {
+                        change: function($event) {
+                          _vm.handleChange()
+                        }
                       },
                       model: {
                         value: _vm.game.rate,

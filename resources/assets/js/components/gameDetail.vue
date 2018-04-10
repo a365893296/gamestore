@@ -11,6 +11,7 @@
                              show-score
                              text-color="#ff9900"
                              score-template="{value}"
+                             @change="handleChange()"
                     >
                     </el-rate>
                 </div>
@@ -147,6 +148,26 @@
                     })
                 }
 
+            },
+            handleChange(){
+                let _this = this ;
+                let rate = this.game.rate ;
+                let id = this.game.id ;
+                let user_id = this.$store.getters.user.id ;
+                axios.post('/setRate' , {
+                    user_id : user_id ,
+                    game_id : id ,
+                    rate : rate ,
+                }).then((response)=>{
+                    let data = response.data ;
+                    _this.$message({
+                        'message' : data.message,
+                        'type' : data.status ,
+                    })
+//                    console.log(response)
+                }).catch((error)=>{
+                    console.log(error)
+                })
             },
         }
 

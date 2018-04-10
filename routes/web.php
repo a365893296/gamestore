@@ -22,18 +22,23 @@ Route::post('/register', 'AuthController@register');
 Route::post('/logout', 'AuthController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/getCarouselGames','gameController@getCarouselGames');
-Route::get('/getCardsGames','gameController@getCardsGames');
+Route::get('/getCarouselGames', 'gameController@getCarouselGames');
+Route::get('/getCardsGames', 'gameController@getCardsGames');
 
 
-Route::post('/game/{id}','gameController@game');
+Route::post('/game/{id}', 'gameController@game');
 
-Route::group(['middleware' =>'auth'],function(){
-    Route::post('/getGameList','gameController@getGameList');
-    Route::post('/getUserInfo' , 'UserController@getUserInfo');
-    Route::post('/purchase' , 'UserGameController@purchase') ;
-    Route::post('/getPurchased', 'UserGameController@getPurchased') ;
-    Route::post('/getMyGameList', 'UserController@getMyGameList') ;
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/getGameList', 'gameController@getGameList');
+    Route::post('/getUserInfo', 'UserController@getUserInfo');
+    Route::post('/purchase', 'UserGameController@purchase');
+    Route::post('/getPurchased', 'UserGameController@getPurchased');
+    Route::post('/getMyGameList', 'UserController@getMyGameList');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/setRate', 'RateController@setRate');
+
 });
 
 
