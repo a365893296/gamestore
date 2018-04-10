@@ -54,7 +54,7 @@ class GameController extends Controller
     public function getGameList(Request $request)
     {
         $user_id = $request->post('id');
-        $games = Game::orderBy('id', 'desc')->take(9)->get();
+        $games = Game::orderBy('id', 'desc')->get();
         $data = array();
         for ($i = 0; $i < count($games); $i++) {
             $data[$i] = array(

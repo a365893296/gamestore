@@ -73,16 +73,27 @@ class UserGameController extends Controller
         $user_id = $request->post('user_id');
         $game_id = $request->post('game_id');
 
-        $game = UserPurchase::getPurchased($user_id,$game_id) ;
-        $rate = Rate::getRate($user_id , $game_id) ;
+        $game = UserPurchase::getPurchased($user_id, $game_id);
+        $rate = Rate::getRate($user_id, $game_id);
 //        $isPurchased = true ;
 //        if($rate){
 //            $isPurchased = flase;
 //        }
 
         return response()->json([
-            'isPurchased' => $game && !$rate ,
-            'status' => 'success' ,
+            'isPurchased' => $game && !$rate,
+            'status' => 'success',
+            'status_code' => 200
+        ]);
+    }
+
+    public function getRecommend(Request $request)
+    {
+        $user_id = $request->post('user_id') ;
+        $users = User::getNeighbor($user_id) ;
+        return response()->json([
+            'data' => $users,
+            'status' => 'success',
             'status_code' => 200
         ]);
     }
