@@ -92,7 +92,7 @@ class UserGameController extends Controller
         $user_id = $request->post('user_id') ;
         $users = User::getNeighbor($user_id) ;
         return response()->json([
-            'data' => $users,
+            $users,
             'status' => 'success',
             'status_code' => 200
         ]);
