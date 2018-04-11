@@ -39,7 +39,7 @@ class User extends Authenticatable
             ->where('users.id', $user_id)
             ->get();
 
-        //随机获取十位用户
+        //随机获取5位用户
         $users = User::select(['id', 'name'])
             ->where('id', '<>', $user_id)
             ->orderBy(\DB::raw('RAND()'))
@@ -63,17 +63,7 @@ class User extends Authenticatable
                 }
             }
         }
-//        return  $neighbor;
 
-//
-//        $users = Rate::select('users.id', 'user_id', 'game_id', 'name', 'rate')
-//            ->join('users', 'user_id', '=', 'users.id')
-//            ->orderBy(\DB::raw('RAND()'))
-//            ->take(10)
-//            ->get();
-
-//        return $users;
-//        //
         $cos = array();
         $cos[0] = 0;
         $fm1 = 0;
@@ -103,7 +93,6 @@ class User extends Authenticatable
                     ) {
                         $fz += $user_rate[$k]['rate'] * $neighbor[$i][$j]['rate'];
                     }
-
                 }
                 //计算分母2
                 if ($neighbor[$i][$j]['rate'] != null) {
@@ -121,28 +110,6 @@ class User extends Authenticatable
             $messages[$i] = $message;
             $message = '';
         }
-        return [ 'messages' => $messages];
-
-        for ($i = 0; $i < 5; $i++) {
-            $fz = 0;
-            $fm2 = 0;
-
-
-            for ($j = 1; $j < 9; $j++) {
-                //计算分子
-                if ($array[5][$j] != null && $array[$i][$j] != null) {
-                    $fz += $array[5][$j] * $array[$i][$j];
-                }
-                //计算分母2
-                if ($array[$i][$j] != null) {
-                    $fm2 += $array[$i][$j] * $array[$i][$j];
-                }
-            }
-            $fm2 = sqrt($fm2);
-            $cos[$i] = $fz / $fm1 / $fm2;
-            echo $cos[$i] . "<br/>";
-        }
-//
-//        return $cos;
+        return ['messages' => $messages];
     }
 }
