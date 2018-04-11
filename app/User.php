@@ -44,16 +44,35 @@ class User extends Authenticatable
         $users = User::select(['id', 'name'])
             ->where('id', '<>', $user_id)
             ->orderBy(\DB::raw('RAND()'))
-            ->take(10)
+            ->take(5)
             ->get();
 
-        $users = Rate::select('users.id', 'user_id', 'game_id', 'name', 'rate')
-            ->join('users', 'user_id', '=', 'users.id')
-            ->orderBy(\DB::raw('RAND()'))
-            ->take(10)
+        for ($i = 0 ; $i<count($users) ; $i++){
+            $users_data[$i] = $users[$i]['id'];
+            $users_name[$i] = $users[$i]['name'] ;
+        }
+        $users = Rate::select('id','user_id','game_id','rate')
+            ->whereIn('user_id', $users_data)
             ->get();
+        $neighbor = array() ;
+        for($i = 0 ;$i< count($users) ; $i++){
+            for ($j = 0 ; $j< count($users_data) ; $j++){
+                if($users[$i]['user_id'] == $users_data[$j]){
+                    $neighbor[$j]['user_id'] = $users[$i]['user_id'];
+                    $neighbor[$j][] = $users[$i] ;
+                }
 
-        return $users;
+            }
+        }
+        
+//
+//        $users = Rate::select('users.id', 'user_id', 'game_id', 'name', 'rate')
+//            ->join('users', 'user_id', '=', 'users.id')
+//            ->orderBy(\DB::raw('RAND()'))
+//            ->take(10)
+//            ->get();
+
+//        return $users;
 //        //
         $cos = array();
         $cos[0] = 0;
@@ -74,10 +93,11 @@ class User extends Authenticatable
             $fm2 = 0;
             $message .= " Cos(" . $user['name'] . "," . $users[$i]['name'] . ")=";
 
-
             for ($j = 0; $j < count($array); $j++) {
                 //计算分子
-                if ($array[$j]['rate'] != null && $users[$i]['rate'] != null) {
+                if ($array[$j]['rate'] != null
+                    && $users[$i]['rate'] != null
+                    &&$array[$j]['game_id'] == $users[$i]['game_id']) {
                     $fz += $array[$j]['rate'] * $users[$i]['rate'];
                 }
                 //计算分母2
@@ -89,9 +109,11 @@ class User extends Authenticatable
             $fm2 = sqrt($fm2);
 
             $cos[$i] = $fz / $fm1 / $fm2;
-            $message.= $cos[$i] . "<br/>";
+            $message .= $cos[$i] . "<br/>             ";
+            $messages[$i] = $message;
+            $message='';
         }
-        return $message;
+        return [ 'users'=>$users , 'messages'=>$messages];
 
         for ($i = 0; $i < 5; $i++) {
             $fz = 0;
