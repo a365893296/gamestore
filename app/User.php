@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
 
-    public static function getNeighbor($user_id)
+    public static function getRecommend($user_id)
     {
         $user = User::find($user_id);
 
@@ -45,7 +45,7 @@ class User extends Authenticatable
             ->orderBy(\DB::raw('RAND()'))
             ->take(5)
             ->get();
-
+        //整理数据
         for ($i = 0; $i < count($users); $i++) {
             $users_data[$i] = $users[$i]['id'];
             $users_name[$i] = $users[$i]['name'];
@@ -53,6 +53,9 @@ class User extends Authenticatable
         $users = Rate::select('user_id', 'game_id', 'rate')
             ->whereIn('user_id', $users_data)
             ->get();
+
+//        $neighbor = collect($users)->groupBy('user_id') ->toArray();
+//        return $neighbor ;
 
         $neighbor = array();
         for ($i = 0; $i < count($users); $i++) {
@@ -67,21 +70,20 @@ class User extends Authenticatable
         $cos = array();
         $cos[0] = 0;
         $fm1 = 0;
-//开始计算cos
-//计算分母1，分母1是第一个公式里面 “*”号左边的内容，分母二是右边的内容
+
+        //开始计算cos
+        //计算分母1，分母1是第一个公式里面 “*”号左边的内容，分母二是右边的内容
         for ($i = 0; $i < count($user_rate); $i++) {
             // 用户的n个评分数据的平方和
             $fm1 += $user_rate[$i]['rate'] * $user_rate[$i]['rate'];
         }
         $fm1 = sqrt($fm1);
-//        return $fm1;
-
-        $message = '';
+//        $message = '';
 
         for ($i = 0; $i < count($neighbor); $i++) {
             $fz = 0;
             $fm2 = 0;
-            $message .= " Cos(" . $user['name'] . "," . $users_name[$i] . ")=";
+//            $message .= " $users_data[$i] Cos(" . $user['name'] . "," . $users_name[$i] . ")=";
 
             if (count($neighbor[$i]) == 0) continue;
             for ($j = 0; $j < count($neighbor[$i]) - 1; $j++) {
@@ -101,15 +103,73 @@ class User extends Authenticatable
 
             }
             $fm2 = sqrt($fm2);
-            $cos[$i] = 0;
+            $cos[$i] = array(
+                'user_id' => $users_data[$i],
+                'name' => $users_name[$i],
+                'value' => 0,
+            );
 
             if ($fm1 != null && $fm2 != null) {
-                $cos[$i] = $fz / $fm1 / $fm2;
+                $cos[$i]['value'] = $fz / $fm1 / $fm2;
             }
-            $message .= $cos[$i] . "<br/>             ";
-            $messages[$i] = $message;
-            $message = '';
+//            $message .= $cos[$i]['value'] . "<br/>             ";
+//            $messages[$i] = $message;
+//            $message = '';
         }
-        return ['messages' => $messages];
+        //$collection 是邻居与用户的cos
+        $collection = collect($cos)->sortByDesc('value')->values()->all();
+
+        $neighbors = array();
+        for ($i = 0; $i < count($collection); $i++) {
+            if ($collection[$i]['value'] > 0.65) {
+                $neighbors[$i] = $collection[$i];
+            }
+        }
+        //符合条件的邻居
+        $neighbors_id = collect($neighbors)->pluck('user_id')->all();
+        $games_id = Rate::select('game_id')->whereIn('user_id', $neighbors_id)->get();
+        //邻居有而用户没有的游戏
+        $games_id = collect($games_id)->unique()->pluck('game_id')
+            ->diff(collect($user_rate)->pluck('game_id'))->values();
+
+        //邻居对游戏的评分
+        $neighbors_rates = Rate::select('user_id', 'game_id', 'rate')
+            ->whereIn('user_id', $neighbors_id)
+            ->whereIn('game_id', $games_id)
+            ->get();
+        $neighbors_rates = collect($neighbors_rates)->groupBy('user_id');
+
+        $predict = array();
+        for ($i = 0; $i < count($games_id); $i++) {
+            $pfz = 0;
+            $pfm = 0;
+            for ($j = 0; $j < count($neighbors_id); $j++) {
+                if (!empty($neighbors_rates[$neighbors_id[$j]])) {
+                    $game_rates = $neighbors_rates[$neighbors_id[$j]];
+                    for ($k = 0; $k < count($game_rates); $k++) {
+                        if ($game_rates[$k]['game_id'] == $games_id[$i]) {
+                            //计算分子
+                            $pfz += $neighbors[$j]['value'] * $game_rates[$k]['rate'];
+                            //计算分母
+                            $pfm += $neighbors[$j]['value'];
+                        }
+                    }
+
+//                    $value =  $pfz / sqrt($pfm) ;
+                    $value = sqrt($pfm) == 0 ? 0 : $pfz / sqrt($pfm);
+                    $predict[] = array(
+                        'user_id' => $neighbors_id[$j],
+                        'game_id' => $games_id[$i],
+                        'value' => $value
+                    );
+                }
+            }
+        }
+        //返回大于3的游戏
+        $predict = collect($predict)->filter(function ($item) {
+            return $item['value'] > 3;
+        })->values();
+        return $predict;
+
     }
 }

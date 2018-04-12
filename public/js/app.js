@@ -94774,7 +94774,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\n.text[data-v-edbc3d52] {\n    font-size: 14px;\n}\n.item[data-v-edbc3d52] {\n    padding: 18px 0;\n}\n\n", ""]);
+exports.push([module.i, "\n.text[data-v-edbc3d52] {\n    font-size: 14px;\n}\n.item[data-v-edbc3d52] {\n    padding: 18px 0;\n}\n.el-carousel__item h3[data-v-edbc3d52] {\n    color: #475669;\n    font-size: 18px;\n    opacity: 0.75;\n    line-height: 300px;\n    margin: 0;\n}\n.el-carousel__item[data-v-edbc3d52]:nth-child(2n) {\n    background-color: #99a9bf;\n}\n.el-carousel__item[data-v-edbc3d52]:nth-child(2n+1) {\n    background-color: #d3dce6;\n}\n.time[data-v-edbc3d52] {\n    font-size: 13px;\n    color: #999;\n}\n.bottom[data-v-edbc3d52] {\n    margin-top: 13px;\n    line-height: 12px;\n}\n.button[data-v-edbc3d52] {\n    padding: 0;\n    float: right;\n}\n.image[data-v-edbc3d52] {\n    width: 100%;\n    display: block;\n}\n.clearfix[data-v-edbc3d52]:before,\n.clearfix[data-v-edbc3d52]:after {\n    display: table;\n    content: \"\";\n}\n.clearfix[data-v-edbc3d52]:after {\n    clear: both\n}\n", ""]);
 
 // exports
 
@@ -94786,6 +94786,40 @@ exports.push([module.i, "\n.text[data-v-edbc3d52] {\n    font-size: 14px;\n}\n.i
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_js__ = __webpack_require__(20);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -94853,7 +94887,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 backgroundSize: "100% auto",
                 backgroundColor: '#e8e8e8'
             },
-            games: []
+            games: [],
+            recommendGames: []
         };
     },
 
@@ -94865,6 +94900,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         //            this.user = this.$store.getters.user
         this.getMyGameList();
+        this.getRecommend();
     },
     methods: {
         //获取已购买的游戏
@@ -94876,6 +94912,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 var data = response.data;
                 _this.games = data.games;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        getRecommend: function getRecommend() {
+            var _this = this;
+            console.log(_this.user.id);
+            axios.post('/getRecommend', {
+                user_id: _this.user.id
+            }).then(function (response) {
+                var data = response.data;
+                _this.recommendGames = data.games;
             }).catch(function (error) {
                 console.log(error);
             });
@@ -95017,7 +95066,154 @@ var render = function() {
               _c(
                 "el-tab-pane",
                 { attrs: { label: "查看我的推荐", name: "fourth" } },
-                [_vm._v("查看我的推荐")]
+                [
+                  _c(
+                    "el-col",
+                    [
+                      _c(
+                        "el-button",
+                        {
+                          attrs: { type: "primary", round: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.getRecommend()
+                            }
+                          }
+                        },
+                        [_vm._v("刷新")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    _vm._l(_vm.recommendGames, function(o, index) {
+                      return _c(
+                        "el-col",
+                        {
+                          key: index,
+                          staticStyle: { "margin-top": "1%" },
+                          attrs: { span: 6, offset: index % 3 > 0 ? 1 : 2 }
+                        },
+                        [
+                          _c(
+                            "el-card",
+                            { attrs: { "body-style": { padding: "0px" } } },
+                            [
+                              _c("img", {
+                                staticClass: "image",
+                                attrs: { src: o.image }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticStyle: { padding: "14px" } }, [
+                                _c("div", { staticStyle: { height: "30px" } }, [
+                                  _vm._v(_vm._s(o.name))
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "bottom clearfix" },
+                                  [
+                                    _c(
+                                      "el-row",
+                                      [
+                                        _c(
+                                          "el-col",
+                                          { attrs: { span: 10, offset: 4 } },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticStyle: {
+                                                  "text-align": "left",
+                                                  "font-size": "15px",
+                                                  "margin-left": "12%"
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                价格:"
+                                                ),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticStyle: {
+                                                      color: "#ff9900"
+                                                    }
+                                                  },
+                                                  [_vm._v(_vm._s(o.price))]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "el-col",
+                                          {
+                                            staticStyle: {
+                                              "font-size": "15px"
+                                            },
+                                            attrs: { span: 10 }
+                                          },
+                                          [
+                                            _vm._v("评分："),
+                                            _c(
+                                              "span",
+                                              {
+                                                staticStyle: {
+                                                  color: "#ff9900"
+                                                }
+                                              },
+                                              [_vm._v(_vm._s(o.rate))]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "el-col",
+                                          {
+                                            staticStyle: { "margin-top": "1%" },
+                                            attrs: { span: 24 }
+                                          },
+                                          [
+                                            _c(
+                                              "el-button",
+                                              {
+                                                staticClass: "button",
+                                                attrs: { type: "text" },
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.showGameDetail(o.id)
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "详情\n                                            "
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    })
+                  )
+                ],
+                1
               )
             ],
             1

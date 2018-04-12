@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Rate;
 use App\Models\UserPurchase;
 use App\User;
@@ -89,12 +90,13 @@ class UserGameController extends Controller
 
     public function getRecommend(Request $request)
     {
-        $user_id = $request->post('user_id') ;
-        $users = User::getNeighbor($user_id) ;
+        $column = array('id', 'name', 'image', 'price', 'rate');
+        $user_id = $request->post('user_id');
+        $recommend = User::getRecommend($user_id);
+        $recommend_id = collect($recommend)->pluck('game_id')->unique()->values();
+        $games = Game::select($column)->whereIn('id', $recommend_id)->get();
         return response()->json([
-            $users,
-            'status' => 'success',
-            'status_code' => 200
+            'games'=>$games,
         ]);
     }
 }
